@@ -3,7 +3,7 @@ import React, {useState} from "react";
 import Sidebar from "../components/Sidebar";
 import Chat from "../components/Chat";
 import Login from "./Login";
-import {BrowserRouter ,Route , Routes} from "react-router-dom";
+import {BrowserRouter, Route, Router, Routes} from "react-router-dom";
 import {useStateValue} from "../StateProvider";
 import http from "../utils/http-communication.ts";
 import {
@@ -40,35 +40,56 @@ function App() {
         //       </div>
         //     )}
         // </div>
-        <div className="app">
-            <BrowserRouter>
-                <Routes>
-                    <Route path="/" >
-                        <Route index element={<SignIn/>} />
-                        <Route path="admin" element={<Admin/>} />
-                        <Route path="chatpreview" element={<ChatPreview />} />
-                        <Route path="rooms" element={<Chat />} />
-                    </Route>
-                </Routes>
-            </BrowserRouter>
-            {/*{*/}
-            {/*  <div className="app_body">*/}
-            {/*    <Router>*/}
-                        {/*      <Sidebar />*/}
-                        {/*      <Switch>*/}
-                          {/*        <Route path="/rooms/:roomId">*/}
-                            {/*          <Chat />*/}
-                          {/*        </Route>*/}
-                          {/*        <Route path="/">*/}
-                            {/*          <Chat />*/}
-                          {/*        </Route>*/}
-                        {/*      </Switch>*/}
-            {/*    </Router>*/}
-            {/*    <QueryClientProvider client={queryClient}>*/}
-                        {/*      <Example />*/}
-            {/*    </QueryClientProvider>*/}
-            {/*  </div>*/}
-            {/*}*/}
+        <div className="app">{
+            <div className="app_body">
+
+                <Router>
+                    <Sidebar/>
+                    <Routes>
+                        <Route index element={<SignIn/>}/>
+                        <Route path="admin" element={<Admin/>}/>
+                        <Route path="chatpreview" element={<ChatPreview/>}/>
+                        <Route path="/rooms/:roomId" element={<Chat/>}/>
+                        {/*<Route path="/">*/}
+                        {/*    <Chat/>*/}
+                        {/*</Route>*/}
+                    </Routes>
+                </Router>
+                <QueryClientProvider client={queryClient}>
+                    <Example/>
+                </QueryClientProvider>
+
+                {/*<BrowserRouter>*/}
+                {/*    <Sidebar />*/}
+                {/*    <Routes>*/}
+                {/*        <Route path="/">*/}
+                {/*            <Route index element={<SignIn/>}/>*/}
+                {/*            <Route path="admin" element={<Admin/>}/>*/}
+                {/*            <Route path="chatpreview" element={<ChatPreview/>}/>*/}
+                {/*            <Route path="rooms" element={<Chat/>}/>*/}
+                {/*        </Route>*/}
+                {/*    </Routes>*/}
+
+                {/*</BrowserRouter>*/}
+                {/*{*/}
+                {/*  <div className="app_body">*/}
+                {/*    <Router>*/}
+                {/*      <Sidebar />*/}
+                {/*      <Switch>*/}
+                {/*        <Route path="/rooms/:roomId">*/}
+                {/*          <Chat />*/}
+                {/*        </Route>*/}
+                {/*        <Route path="/">*/}
+                {/*          <Chat />*/}
+                {/*        </Route>*/}
+                {/*      </Switch>*/}
+                {/*    </Router>*/}
+                {/*    <QueryClientProvider client={queryClient}>*/}
+                {/*      <Example />*/}
+                {/*    </QueryClientProvider>*/}
+                {/*  </div>*/}
+                {/*}*/}
+            </div>}
         </div>
     );
 }
@@ -78,7 +99,7 @@ function Example() {
         http
             .get("/users")
             .then((res) => res.data
-    ));
+            ));
     console.log(data);
 
     if (isLoading) return "Loading...";
