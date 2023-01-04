@@ -6,7 +6,7 @@ import ChatIcon from "@material-ui/icons/Chat";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { SearchOutlined } from "@material-ui/icons";
 import SidebarChat from "./SidebarChat";
-import db from "./firebase";
+// import db from "./firebase";
 import { useStateValue } from "../StateProvider";
 
 function Sidebar(props) {
