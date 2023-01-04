@@ -5,7 +5,7 @@ import Chat from "../components/Chat";
 import Login from "./Login";
 import {BrowserRouter ,Route , Routes} from "react-router-dom";
 import {useStateValue} from "../StateProvider";
-import axios from "axios";
+import http from "../utils/http-communication.ts";
 import {
     useQuery,
     useQueryClient,
@@ -54,18 +54,18 @@ function App() {
             {/*{*/}
             {/*  <div className="app_body">*/}
             {/*    <Router>*/}
-            {/*      <Sidebar />*/}
-            {/*      <Switch>*/}
-            {/*        <Route path="/rooms/:roomId">*/}
-            {/*          <Chat />*/}
-            {/*        </Route>*/}
-            {/*        <Route path="/">*/}
-            {/*          <Chat />*/}
-            {/*        </Route>*/}
-            {/*      </Switch>*/}
+                        {/*      <Sidebar />*/}
+                        {/*      <Switch>*/}
+                          {/*        <Route path="/rooms/:roomId">*/}
+                            {/*          <Chat />*/}
+                          {/*        </Route>*/}
+                          {/*        <Route path="/">*/}
+                            {/*          <Chat />*/}
+                          {/*        </Route>*/}
+                        {/*      </Switch>*/}
             {/*    </Router>*/}
             {/*    <QueryClientProvider client={queryClient}>*/}
-            {/*      <Example />*/}
+                        {/*      <Example />*/}
             {/*    </QueryClientProvider>*/}
             {/*  </div>*/}
             {/*}*/}
@@ -75,10 +75,11 @@ function App() {
 
 function Example() {
     const {isLoading, error, data, isFetching} = useQuery(["repoData"], () =>
-        axios
-            .get("https://jsonplaceholder.typicode.com/posts")
-            .then((res) => res.data)
-    );
+        http
+            .get("/users")
+            .then((res) => res.data
+    ));
+    console.log(data);
 
     if (isLoading) return "Loading...";
 
@@ -87,8 +88,7 @@ function Example() {
     return (
         <div>
             <h1>{"query example"}</h1>
-            <p>{"id: " + data[9].id}</p>
-            <p>{data[9].title}</p>
+            <p>{data.data[0].nickname}</p>
         </div>
     );
 }

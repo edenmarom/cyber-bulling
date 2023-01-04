@@ -5,8 +5,8 @@ import MicIcon from '@material-ui/icons/Mic';
 import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
 import "../css/Chat.css";
 import { useParams } from 'react-router-dom';
-import db from './firebase';
-import firebase from 'firebase';
+// import db from './firebase';
+// import firebase from 'firebase';
 import {useStateValue} from "../StateProvider";
 
 function Chat() {
