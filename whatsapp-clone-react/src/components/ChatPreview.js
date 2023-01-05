@@ -55,11 +55,6 @@ export default function ChatPreview() {
     // }
     return (
         <div>
-            <div className="admin">
-                <Link to="admin">
-                    <button className="button-81">Admin</button>
-                </Link>
-            </div>
             <div id="login1">
                 <div className="login_topimg"></div>
                 <div className="wrap-login100">
@@ -67,8 +62,8 @@ export default function ChatPreview() {
                     <span className="login100-form-subtitle m-b-16"> כינוי:{currentUser}</span>
                     <span className="login100-form-subtitle m-b-16">מספר משתתפים:</span>
                     <div className="container-login100-form-btn p-t-25">
-                        <Link to="rooms/5">
-                        <button className="login100-form-btn" style={{marginBottom: "20px" }}>המשך</button>
+                        <Link to="/rooms/5">
+                            <button className="login100-form-btn" style={{marginBottom: "20px"}}>המשך</button>
                         </Link>
                     </div>
                 </div>
