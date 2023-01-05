@@ -20,7 +20,6 @@ function App() {
     return (
         <div className="app">
             <BrowserRouter>
-                <Sidebar/>
                 <Routes>
                     <Route path="/">
                         <Route index element={<SignIn/>}/>

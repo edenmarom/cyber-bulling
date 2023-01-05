@@ -8,6 +8,7 @@ import {useParams} from 'react-router-dom';
 // import db from './firebase';
 // import firebase from 'firebase';
 import {useStateValue} from "../StateProvider";
+import Sidebar from "./Sidebar";
 
 function Chat() {
     const [input, setInput] = useState("");
@@ -49,6 +50,7 @@ function Chat() {
 
     return (
         <div className="app_body">
+            <Sidebar/>
             <div className='chat'>
                 <div className='chat_header'>
                     <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`}/>
