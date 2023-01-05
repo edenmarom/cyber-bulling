@@ -18,6 +18,7 @@ function Chat() {
     const [messages, setMessages] = useState([]);
     const [{user}, dispatch] = useStateValue();
 
+
     useEffect(() => {
         if (roomId) {
             // db.collection('rooms').doc(roomId).onSnapshot(snapshot => {
@@ -78,7 +79,7 @@ function Chat() {
                 </div>
                 <div className='chat_body'>
                     {messages.map(message => (
-                        <p className={`chat_message ${message.name == user.displayName && 'chat_receiver'}`}>
+                        <p className={`chat_message ${message.name === user.displayName && 'chat_receiver'}`}>
                             <span className="chat_name">{message.name}</span>
                             {message.message}
                             <span

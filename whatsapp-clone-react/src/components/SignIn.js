@@ -7,15 +7,14 @@ import {useDispatch, useSelector} from 'react-redux';
 import '../css/SignIn.css';
 import {Link} from "react-router-dom";
 import {initUser} from "../Slices/UserSlice";
-
+import {initScenario} from "../Slices/ScenaioSlice";
 
 
 export default function SignIn() {
+    const dispatch = useDispatch();
+    const currentScenario = useSelector((state) => state.scenario.id);
+    const currentUser = useSelector((state) => state.user.nickname);
 
-
-    const [nickName, setNickname] = useState("");
-    const dispatch=useDispatch();
-    const currentUser = useSelector((state) => state.user.currentUser);
 
     // Check the email and the password.
     // const signIn = async () => {
@@ -77,7 +76,11 @@ export default function SignIn() {
                     <div className="wrap-input100 validate-input m-b-16">
                         <input className="input100" type="text" placeholder="כינוי"
                                maxLength="15" minLength="6"
-                               onChange={(e) => dispatch(initUser(e.target.value))}/>
+                               onChange={(e) => {//TODO CHENA change to onSubmit
+                                   dispatch(initUser(e.target.value));
+                                   dispatch(initScenario("5"));
+                               }
+                               }/>
                         <span className="focus-input100"></span>
                         <span className="symbol-input100">
                         <span className="glyphicon glyphicon-user"></span>

@@ -7,7 +7,7 @@ import {useSelector} from "react-redux";
 
 export default function ChatPreview() {
 
-    const currentUser = useSelector((state) => state.user.currentUser);
+    const currentUser = useSelector((state) => state.user.nickname);
 
 
     // Check the email and the password.

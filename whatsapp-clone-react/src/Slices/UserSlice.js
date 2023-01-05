@@ -1,7 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    currentUser: "",
+    nickname: "",
+    id:"",
+    scenarioId:"",
+    scenarioStartTime:Date.now()
 }
 
 export const userSlice = createSlice({
@@ -10,7 +13,8 @@ export const userSlice = createSlice({
     reducers: {
         // New user.
         initUser: (state, action) => {
-            state.currentUser = action.payload;
+            console.log(action.payload);
+            state.nickname = action.payload;
         },
     }
 });
