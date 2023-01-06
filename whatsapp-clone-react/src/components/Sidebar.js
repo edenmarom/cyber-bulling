@@ -6,12 +6,14 @@ import ChatIcon from "@material-ui/icons/Chat";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { SearchOutlined } from "@material-ui/icons";
 import SidebarChat from "./SidebarChat";
-// import db from "./firebase";
 import { useStateValue } from "../StateProvider";
+import { useDispatch, useSelector } from "react-redux";
 
 function Sidebar(props) {
   const [rooms, setRooms] = useState([]);
-  const [{ user }, dispatch] = useStateValue();
+      const dispatch = useDispatch();
+      const currentUser = useSelector((state) => state.user.nickname);
+  // const [{ user }, dispatch] = useStateValue();
 
   useEffect(() => {
     // const unsubscribe = db.collection('rooms').onSnapshot(snapshot => (
