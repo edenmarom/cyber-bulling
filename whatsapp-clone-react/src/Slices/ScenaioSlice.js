@@ -21,8 +21,22 @@ const initialState = {
 }
 
 const fakeUser = {
-  nickname: "moshe",
-  id: "4534",
+  nickname: "גיל המלך",
+  id: "1",
+  scenarioId: "88888",
+  scenarioStartTime: Date.now(),
+};
+
+const fakeUser2 = {
+  nickname: "חתיך אש מגיל שש",
+  id: "2",
+  scenarioId: "88888",
+  scenarioStartTime: Date.now(),
+};
+
+const fakeUser3 = {
+  nickname: "המלך של הכיתה",
+  id: "3",
   scenarioId: "88888",
   scenarioStartTime: Date.now(),
 };
@@ -30,22 +44,27 @@ const fakeUser = {
 const fakeMsg = {
   text: "hii",
   timeOffset: "0",
-  user: "4534",
+  user: "1",
 };
 
 const fakeMsg2 = {
   text: "hii2",
   timeOffset: "0:12",
-  user: "4534",
+  user: "2",
 };
 
+const fakeMsg3 = {
+  text: "hii3",
+  timeOffset: "0:15",
+  user: "3",
+};
 const scenarioMock = {
   id: "88888",
   severity: severity.HARSH,
   commentStyle: commentStyle.PRO,
   numberOfUsers: 2,
-  fakeUsers: [fakeUser],
-  messages: [fakeMsg, fakeMsg2],
+  fakeUsers: [fakeUser, fakeUser2, fakeUser3],
+  messages: [fakeMsg, fakeMsg2, fakeMsg3],
 };
 
 
