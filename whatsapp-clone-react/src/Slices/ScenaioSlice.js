@@ -42,21 +42,21 @@ const fakeUser3 = {
 };
 
 const fakeMsg = {
-  text: "hii",
-  timeOffset: "0",
-  user: "1",
+  text: "מה קורה??",
+  timeOffset: 0,
+  nickname: "המלך של הכיתה",
 };
 
 const fakeMsg2 = {
-  text: "hii2",
-  timeOffset: "0:12",
-  user: "2",
+  text: "היי!",
+  timeOffset: 3000,
+  nickname: "חתיך אש מגיל שש",
 };
 
 const fakeMsg3 = {
-  text: "hii3",
-  timeOffset: "0:15",
-  user: "3",
+  text: "שלוםם",
+  timeOffset: 5000,
+  nickname: "גיל המלך",
 };
 const scenarioMock = {
   id: "88888",
