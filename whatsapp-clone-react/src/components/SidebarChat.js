@@ -11,9 +11,7 @@ function SidebarChat({id,name}) {
 
     return true ? (
       <div className="sidebarChat">
-        <Avatar
-          src={`https://api.dicebear.com/5.x/avataaars/svg?seed=${seed}`}
-        />
+        <Avatar/>
         <div className="sidebarChat_info">
           <h2>{name}</h2>
         </div>

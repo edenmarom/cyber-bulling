@@ -11,7 +11,7 @@ function Sidebar({ participants }) {
   return (
     <div className="sidebar">
       <div className="sidebar_header">
-        <Avatar />
+        <div></div>
         <div className="sidebar_headerRight">
           <IconButton>
             <DonutLargeIcon />

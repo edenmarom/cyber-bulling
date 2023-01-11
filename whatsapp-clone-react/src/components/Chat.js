@@ -36,9 +36,7 @@ function Chat() {
         <Sidebar participants={participants} />
         <div className="chat">
           <div className="chat_header">
-            <Avatar
-              src={`https://api.dicebear.com/5.x/bottts-neutral/svg?seed=${seed}`}
-            />
+            <Avatar/>
             <div className="chat_headerInfo">
               <h3 className="chat-room-name">{roomName}</h3>
               <p className="chat-room-last-seen">{participants.join(", ")}</p>

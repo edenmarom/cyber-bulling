@@ -2,7 +2,7 @@ import {createSlice} from "@reduxjs/toolkit";
 
 const severity = {
     HARSH:0,
-    MILD:0
+    MILD:1
 }
 
 const commentStyle = {
