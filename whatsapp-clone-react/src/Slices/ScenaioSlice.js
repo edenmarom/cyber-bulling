@@ -16,30 +16,8 @@ const initialState = {
     severity: severity.HARSH,
     commentStyle: commentStyle.PRO,
     numberOfUsers: 2,
-    fakeUsers: [],
     messages: []
 }
-
-const fakeUser = {
-  nickname: "גיל המלך",
-  id: "1",
-  scenarioId: "88888",
-  scenarioStartTime: Date.now(),
-};
-
-const fakeUser2 = {
-  nickname: "חתיך אש מגיל שש",
-  id: "2",
-  scenarioId: "88888",
-  scenarioStartTime: Date.now(),
-};
-
-const fakeUser3 = {
-  nickname: "המלך של הכיתה",
-  id: "3",
-  scenarioId: "88888",
-  scenarioStartTime: Date.now(),
-};
 
 const fakeMsg = {
   text: "מה קורה??",
@@ -63,11 +41,8 @@ const scenarioMock = {
   severity: severity.HARSH,
   commentStyle: commentStyle.PRO,
   numberOfUsers: 2,
-  fakeUsers: [fakeUser, fakeUser2, fakeUser3],
   messages: [fakeMsg, fakeMsg2, fakeMsg3],
 };
-
-
 
 export const ScenarioSlice = createSlice({
     name: 'scenario',
@@ -80,8 +55,6 @@ export const ScenarioSlice = createSlice({
             state.severity = scenarioMock.severity;
             state.commentStyle = scenarioMock.commentStyle;
             state.messages = scenarioMock.messages;
-            state.fakeUsers = scenarioMock.fakeUsers;
-
         },
     }
 });

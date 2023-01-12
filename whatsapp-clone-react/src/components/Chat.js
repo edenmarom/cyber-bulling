@@ -1,43 +1,75 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Avatar } from "@material-ui/core";
 import "../css/Chat.css";
 import Sidebar from "./Sidebar";
-import { updateUserID } from "../Slices/UserSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { store } from "../Store";
 
 function Chat() {
+
   const [input, setInput] = useState("");
   const [participants, setParticipants] = useState([]);
   const [displayedMessages, setDisplayedMessages] = useState([]);
-  const dispatch = useDispatch();
+  const [firstMessageTime, setFirstMessageTime] = useState();
+
+  const roomName = "הקבוצה הכי טובה בעולם";
   const currentUser = useSelector((state) => state.user);
+  const messages = useSelector((state) => state.scenario.messages);
+  const displayedMessagesRef = useRef(displayedMessages);
+  displayedMessagesRef.current = displayedMessages;
+
   const currentTime = new Date();
   const hours = currentTime.getHours().toString().padStart(2, "0");
   const minutes = currentTime.getMinutes().toString().padStart(2, "0");
-  const { messages } = store.getState().scenario;
-  const roomName = "הקבוצה הכי טובה בעולם";
-
-  useEffect(() => {
-    createParticipantList();
-    renderMessages();
-  }, []);
 
   const sendMessage = (event) => {
     event.preventDefault();
     const userMessage = {
       text: input,
       nickname: currentUser.nickname,
+      timeOffset: performance.now() - firstMessageTime,
     };
     addMessage(userMessage);
     setInput('');
-    dispatch(updateUserID("23423423425"));
   };
 
-  // TODO Copy this where needed
-  const filterUserMessages = (messages, userNickname) => {
-    return messages.filter(message => message.nickname === userNickname);
+  const renderMessages = () => {
+      if (!firstMessageTime) {
+        setFirstMessageTime(performance.now());
+      }
+      messages.forEach((message) => {
+        setTimeout(() => addMessage(message), message.timeOffset);
+      });
   };
+
+  const addMessage = (message) => {
+      setDisplayedMessages((displayedMessages) => {
+        return [...displayedMessages, message];
+      });
+  };
+
+  const createParticipantList = () => {
+      const fakeUsersNicknames = messages.map((msg) => msg.nickname);
+      const currentUserNickname = store.getState().user.nickname;
+      let randomIndex = Math.floor(Math.random() * fakeUsersNicknames.length);
+      fakeUsersNicknames.splice(randomIndex, 0, currentUserNickname);
+      setParticipants(fakeUsersNicknames);
+  };
+
+  const sendUserMesegesToServer = () => setTimeout(() => {
+    const userMessages = displayedMessagesRef.current.filter(
+      (message) => message.nickname === currentUser.nickname
+    );
+    console.log(userMessages);
+    // TODO send to server
+
+  }, messages[messages.length - 1].timeOffset + 5000);
+
+  useEffect(() => {
+    createParticipantList();
+    renderMessages();
+    sendUserMesegesToServer();
+  }, []);
 
   return (
     <div className="app_body">
@@ -85,27 +117,6 @@ function Chat() {
       </div>
     </div>
   );
-
-  function renderMessages() {
-    messages.forEach((message) => {
-      setTimeout(() => addMessage(message), message.timeOffset);
-    });
-  }
-
-  function addMessage(message) {
-    setDisplayedMessages((displayedMessages) => {
-      return [...displayedMessages, message];
-    });
-  }
-
-  function createParticipantList() {
-    const fakeUsers = store.getState().scenario.fakeUsers;
-    const fakeUsersNicknames = fakeUsers.map((user) => user.nickname);
-    const currentUserNickname = store.getState().user.nickname;
-    let randomIndex = Math.floor(Math.random() * fakeUsersNicknames.length);
-    fakeUsersNicknames.splice(randomIndex, 0, currentUserNickname);
-    setParticipants(fakeUsersNicknames);
-  }
 }
 
 export default Chat;
