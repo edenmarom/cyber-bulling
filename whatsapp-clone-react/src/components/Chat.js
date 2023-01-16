@@ -18,6 +18,7 @@ function Chat() {
   const messages = useSelector((state) => state.scenario.messages);
   const displayedMessagesRef = useRef(displayedMessages);
   displayedMessagesRef.current = displayedMessages;
+  const lastMessageRef = useRef(null);
   const userColors = new Map();
 
 
@@ -48,13 +49,14 @@ function Chat() {
         minute: "2-digit",
         hour12:false,
       });
-
       if (!userColors.has(message.nickname)) {
         userColors.set(message.nickname, getRandomReadableColor());
       }
-
       displayedMsg.color = userColors.get(message.nickname);
       setDisplayedMessages((prev) => [...prev, displayedMsg]);
+      requestAnimationFrame(() => {
+        lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
+      });
   };
 
   const createParticipantList = () => {
@@ -103,14 +105,16 @@ function Chat() {
         </div>
         <div className="chat_body">
           {displayedMessages.map((message, index) => (
-            <p
+            <div
               key={index}
               className={`chat_message ${
-                message.nickname === currentUser.nickname && "chat_receiver" 
+                message.nickname === currentUser.nickname && "chat_receiver"
               }`}
             >
               <span
-                className={`chat_name ${message.nickname === currentUser.nickname && "hide"}`}
+                className={`chat_name ${
+                  message.nickname === currentUser.nickname && "hide"
+                }`}
                 style={{
                   color:
                     message.nickname !== currentUser.nickname
@@ -120,9 +124,11 @@ function Chat() {
               >
                 {message.nickname}
               </span>
-              <div>{message.text}</div>
+              <div className="message" ref={lastMessageRef}>
+                {message.text}
+              </div>
               <span className="chat_timestemp">{message.displayTime}</span>
-            </p>
+            </div>
           ))}
         </div>
         <div className="chat_footer">

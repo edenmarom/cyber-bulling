@@ -38,6 +38,7 @@
     margin-top: -50px;
     box-shadow: -1px 4px 20px -6px rgba(0, 0, 0, 0.2);
     max-width: 1100px;
+    border-radius: 30px !important;
 }
 
 .chat_headerInfo > p {
@@ -100,6 +101,7 @@
     justify-content: space-between;
     height: 62px;
     border: 1px solid lightgray;
+    border-bottom-left-radius: 30px;
 }
 
 .chat_footer > form{

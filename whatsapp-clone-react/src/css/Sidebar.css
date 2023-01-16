@@ -33,6 +33,7 @@
     justify-content: space-between;
     padding: 20px;
     border-right: 1px solid lightgray;
+    border-top-right-radius: 30px;
 }
 
 .sidebar_headerRight{
