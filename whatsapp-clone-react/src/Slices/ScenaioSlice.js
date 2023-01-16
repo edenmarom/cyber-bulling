@@ -2,7 +2,7 @@ import {createSlice} from "@reduxjs/toolkit";
 
 const severity = {
     HARSH:0,
-    MILD:0
+    MILD:1
 }
 
 const commentStyle = {
@@ -16,27 +16,37 @@ const initialState = {
     severity: severity.HARSH,
     commentStyle: commentStyle.PRO,
     numberOfUsers: 2,
-    fakeUsers: [],
     messages: []
 }
 
-const fakeUser = {
-  nickname: "moshe",
-  id: "4534",
-  scenarioId: "88888",
-  scenarioStartTime: Date.now(),
-};
-
 const fakeMsg = {
-  text: "hii",
-  timeOffset: "0",
-  user: "4534",
+  text: "מה קורה??",
+  timeOffset: 0,
+  nickname: "המלך של הכיתה",
 };
 
 const fakeMsg2 = {
-  text: "hii2",
-  timeOffset: "0:12",
-  user: "4534",
+  text: "היי!",
+  timeOffset: 3000,
+  nickname: "חתיך אש מגיל שש",
+};
+
+const fakeMsg3 = {
+  text: "שלוםם",
+  timeOffset: 5000,
+  nickname: "גיל המלך",
+};
+
+const fakeMsg4 = {
+  text: "ראיתם את הסרט החדש?",
+  timeOffset: 60000,
+  nickname: "המלך של הכיתה",
+};
+
+const fakeMsg5 = {
+  text: "כןןן",
+  timeOffset: 62000,
+  nickname: "חתיך אש מגיל שש",
 };
 
 const scenarioMock = {
@@ -44,11 +54,8 @@ const scenarioMock = {
   severity: severity.HARSH,
   commentStyle: commentStyle.PRO,
   numberOfUsers: 2,
-  fakeUsers: [fakeUser],
-  messages: [fakeMsg, fakeMsg2],
+  messages: [fakeMsg, fakeMsg2, fakeMsg3, fakeMsg4, fakeMsg5],
 };
-
-
 
 export const ScenarioSlice = createSlice({
     name: 'scenario',
@@ -61,8 +68,6 @@ export const ScenarioSlice = createSlice({
             state.severity = scenarioMock.severity;
             state.commentStyle = scenarioMock.commentStyle;
             state.messages = scenarioMock.messages;
-            state.fakeUsers = scenarioMock.fakeUsers;
-
         },
     }
 });

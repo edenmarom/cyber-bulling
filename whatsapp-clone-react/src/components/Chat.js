@@ -1,125 +1,152 @@
-import React, {useState, useEffect} from 'react';
-import {Avatar, IconButton} from '@material-ui/core';
-import {AttachFile, MoreVert, SearchOutlined} from '@material-ui/icons';
-import MicIcon from '@material-ui/icons/Mic';
-import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
+import React, { useState, useEffect, useRef } from "react";
+import { Avatar } from "@material-ui/core";
 import "../css/Chat.css";
-import {useParams} from 'react-router-dom';
-import {useStateValue} from "../StateProvider";
 import Sidebar from "./Sidebar";
-import { updateUserID } from "../Slices/UserSlice";
-import { useDispatch, useSelector } from "react-redux";
-
-
+import { useSelector } from "react-redux";
 
 function Chat() {
-    const [input, setInput] = useState("");
-    const [seed, setSeed] = useState("");
-    const {roomId} = useParams();
-    const [roomName, setRoomName] = useState("");
-    const [messages, setMessages] = useState([]);
-    const dispatch = useDispatch();
-    const currentUser = useSelector((state) => state.user.nickname);
 
+  const [input, setInput] = useState("");
+  const [participants, setParticipants] = useState([]);
+  const [displayedMessages, setDisplayedMessages] = useState([]);
+  const [firstMessageTime, setFirstMessageTime] = useState();
 
+  const chatName = "הקבוצה הכי טובה בעולם";
+  const delayTimeToSendToServerUserMessages = 5000;
+  const defaultUserDisplayColor = "black";
+  const userColors = new Map();
+  const currentUser = useSelector((state) => state.user);
+  const messages = useSelector((state) => state.scenario.messages);
+  const displayedMessagesRef = useRef(displayedMessages);
+  displayedMessagesRef.current = displayedMessages;
+  const lastMessageRef = useRef(null);
 
+  const sendMessage = (event) => {
+    event.preventDefault();
+    const userMessage = {
+      text: input,
+      nickname: currentUser.nickname,
+      timeOffset: performance.now() - firstMessageTime,
+    };
+    addMessage(userMessage);
+    setInput('');
+  };
 
-    useEffect(() => {
-        if (roomId) {
-            // db.collection('rooms').doc(roomId).onSnapshot(snapshot => {
-            //     setRoomName(snapshot.data().name);
-            // });
+  const renderMessages = () => {
+      if (!firstMessageTime) {
+        setFirstMessageTime(performance.now());
+      }
+      messages.forEach((message) => {
+        setTimeout(() => addMessage(message), message.timeOffset);
+      });
+  };
 
-            // db.collection('rooms').doc(roomId).collection("messages").orderBy("timestamp","asc").onSnapshot(snapshot => {
-            //     setMessages(snapshot.docs.map(doc => doc.data()))
-            // });
+  const addMessage = (message) => {
+      const displayedMsg = { ...message };
+      displayedMsg.displayTime = new Date().toLocaleTimeString("en-US", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12:false,
+      });
+      if (!userColors.has(message.nickname)) {
+        userColors.set(message.nickname, getRandomReadableColor());
+      }
+      displayedMsg.color = userColors.get(message.nickname);
+      setDisplayedMessages((prev) => [...prev, displayedMsg]);
+      requestAnimationFrame(() => {
+        lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
+      });
+  };
 
-            setRoomName("room1");
-            setMessages([]);
-        }
-    }, [roomId])
+  const createParticipantList = () => {
+      const fakeUsersNicknames = messages.map((msg) => msg.nickname);
+      let uniquefakeUsersNicknames = [...new Set(fakeUsersNicknames)];
+      let randomIndex = Math.floor(
+        Math.random() * uniquefakeUsersNicknames.length
+      );
+      uniquefakeUsersNicknames.splice(randomIndex, 0, currentUser.nickname);
+      setParticipants(uniquefakeUsersNicknames);
+  };
 
-    useEffect(() => {
-        setSeed(Math.floor(Math.random() * 5000));
-    }, [roomId]);
+  const sendUserMesegesToServer = () =>
+    setTimeout(() => {
+      const userMessages = displayedMessagesRef.current.filter(
+        (message) => message.nickname === currentUser.nickname
+      );
+      console.log(userMessages);
+      // TODO send to server
+    }, messages[messages.length - 1].timeOffset + delayTimeToSendToServerUserMessages);
 
-    const sendMessage = (e) => {
-        // e.preventDefault();
-        // db.collection('rooms').doc(roomId).collection('messages').add({
-        //     message: input,
-        //     name: user.displayName,
-        //     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-        // })
+    const getRandomReadableColor = () => {
+      const red = Math.floor(Math.random() * 256);
+      const green = Math.floor(Math.random() * 256);
+      const blue = Math.floor(Math.random() * 256);
+      return `rgb(${red}, ${green}, ${blue})`;
+    };
 
-        // setInput("");
-        dispatch(updateUserID("23423423425"));
+  useEffect(() => {
+    createParticipantList();
+    renderMessages();
+    sendUserMesegesToServer();
+  }, []);
 
-    }
-
-    return (
-      <div className="app_body">
-        <Sidebar />
-        <div className="chat">
-          <div className="chat_header">
-            <Avatar
-              src={`https://avatars.dicebear.com/api/human/${seed}.svg`}
-            />
-            <div className="chat_headerInfo">
-              <h3 className="chat-room-name">{roomName}</h3>
-              <p className="chat-room-last-seen">
-                Last seen{" "}
-                {new Date(
-                  messages[messages.length - 1]?.timestamp?.toDate()
-                ).toUTCString()}
-              </p>
-            </div>
-            <div className="chat_headerRight">
-              <IconButton>
-                <SearchOutlined />
-              </IconButton>
-              <IconButton>
-                <AttachFile />
-              </IconButton>
-              <IconButton>
-                <MoreVert />
-              </IconButton>
-            </div>
+  return (
+    <div className="app_body">
+      <Sidebar participants={participants} />
+      <div className="chat">
+        <div className="chat_header">
+          <Avatar />
+          <div className="chat_headerInfo">
+            <h3 className="chat-room-name">{chatName}</h3>
+            <p className="chat-room-last-seen">{participants.join(", ")}</p>
           </div>
-          <div className="chat_body">
-            {messages.map((message) => (
-              <p
-                className={`chat_message ${
-                  message.name === currentUser.displayName && "chat_receiver"
+          <div className="chat_headerRight"></div>
+        </div>
+        <div className="chat_body">
+          {displayedMessages.map((message, index) => (
+            <div
+              key={index}
+              className={`chat_message ${
+                message.nickname === currentUser.nickname && "chat_receiver"
+              }`}
+            >
+              <span
+                className={`chat_name ${
+                  message.nickname === currentUser.nickname && "hide"
                 }`}
+                style={{
+                  color:
+                    message.nickname !== currentUser.nickname
+                      ? message.color
+                      : defaultUserDisplayColor,
+                }}
               >
-                <span className="chat_name">{message.name}</span>
-                {message.message}
-                <span className="chat_timestemp">
-                  {new Date(message.timestamp?.toDate()).toUTCString()}
-                </span>
-              </p>
-            ))}
-          </div>
-          <div className="chat_footer">
-            <InsertEmoticonIcon />
-            <form>
-              <input
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                type="text"
-                placeholder="Type a message"
-              />
-              {/* <button type="submit" onClick={sendMessage}> Send a Message</button> */}
-            </form>
+                {message.nickname}
+              </span>
+              <div className="message" ref={lastMessageRef}>
+                {message.text}
+              </div>
+              <span className="chat_timestemp">{message.displayTime}</span>
+            </div>
+          ))}
+        </div>
+        <div className="chat_footer">
+          <form>
+            <input
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              type="text"
+              placeholder="הקלד הודעה"
+            />
             <button type="submit" onClick={sendMessage}>
               {" "}
               Send a Message
             </button>
-            <MicIcon />
-          </div>
+          </form>
         </div>
       </div>
-    );
+    </div>
+  );
 }
 
-export default Chat
+export default Chat;
