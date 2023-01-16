@@ -56,7 +56,7 @@
     background-repeat: repeat;
     background-position: center;
     padding: 30px;
-    overflow:scroll;
+    overflow-y: scroll;
 }
 
 .chat_message{
@@ -70,20 +70,28 @@
 }
 
 .chat_name{
-    position: absolute;
-    top:-15px;
-    font-weight: 800;
-    font-size: xx-small;
+    font-weight: 700;
+    font-size: small;
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.hide {
+    display: none;
 }
 
 .chat_timestemp{
-    margin-right: 10px;
+    margin-top: 5px;
     font-size: xx-small;
+    display: block;
 }
 
-.chat_receiver{
+.chat_receiver {
     margin-left: auto;
-    background-color: #dcf8c6;
+    background-color: #dcf8c6!important;
+    color: black !important;
 }
 
 .chat_footer{

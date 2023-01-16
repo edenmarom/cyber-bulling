@@ -36,12 +36,25 @@ const fakeMsg3 = {
   timeOffset: 5000,
   nickname: "גיל המלך",
 };
+
+const fakeMsg4 = {
+  text: "ראיתם את הסרט החדש?",
+  timeOffset: 60000,
+  nickname: "המלך של הכיתה",
+};
+
+const fakeMsg5 = {
+  text: "כןןן",
+  timeOffset: 62000,
+  nickname: "חתיך אש מגיל שש",
+};
+
 const scenarioMock = {
   id: "88888",
   severity: severity.HARSH,
   commentStyle: commentStyle.PRO,
   numberOfUsers: 2,
-  messages: [fakeMsg, fakeMsg2, fakeMsg3],
+  messages: [fakeMsg, fakeMsg2, fakeMsg3, fakeMsg4, fakeMsg5],
 };
 
 export const ScenarioSlice = createSlice({
