@@ -14,13 +14,12 @@ function Chat() {
   const chatName = "הקבוצה הכי טובה בעולם";
   const delayTimeToSendToServerUserMessages = 5000;
   const defaultUserDisplayColor = "black";
+  const userColors = new Map();
   const currentUser = useSelector((state) => state.user);
   const messages = useSelector((state) => state.scenario.messages);
   const displayedMessagesRef = useRef(displayedMessages);
   displayedMessagesRef.current = displayedMessages;
   const lastMessageRef = useRef(null);
-  const userColors = new Map();
-
 
   const sendMessage = (event) => {
     event.preventDefault();
