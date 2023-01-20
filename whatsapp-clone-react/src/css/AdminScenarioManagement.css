@@ -1,0 +1,10 @@
+.element{
+    align-content: center;
+    margin:0 auto;
+    background: #dadadc !important;
+}
+.table{
+    direction: ltr;
+    background-color: #ffffff;
+    align-content: center;
+}
