@@ -11,8 +11,10 @@ import {
     QueryClientProvider,
 } from "@tanstack/react-query";
 import SignIn from "./SignIn";
-import Admin from "./Admin";
+import AdminLogin from "./AdminLogin";
 import ChatPreview from "./ChatPreview";
+import AdminPage from "./AdminPage";
+import AdminScenarioManagement from "./AdminScenarioManagement";
 
 const queryClient = new QueryClient();
 
@@ -23,9 +25,11 @@ function App() {
                 <Routes>
                     <Route path="/">
                         <Route index element={<SignIn/>}/>
-                        <Route path="admin" element={<Admin/>}/>
+                        <Route path="adminlogin" element={<AdminLogin/>}/>
                         <Route path="chatpreview" element={<ChatPreview/>}/>
                         <Route path="rooms/:roomId" element={<Chat/>}/>
+                        <Route path="adminpage" element={<AdminPage/>}/>
+                        <Route path="scenariomanagement" element={<AdminScenarioManagement/>}/>
                     </Route>
                 </Routes>
             </BrowserRouter>
