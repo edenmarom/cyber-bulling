@@ -15,7 +15,7 @@ function Chat() {
   const defaultUserDisplayColor = "black";
   const userColors = new Map();
   const currentUser = useSelector((state) => state.user);
-  const messages = useSelector((state) => state.scenario.messages);
+  const messages = useSelector((state) => state.scenario.scenario.messages);
   const displayedMessagesRef = useRef(displayedMessages);
   displayedMessagesRef.current = displayedMessages;
   const lastMessageRef = useRef(null);

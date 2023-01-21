@@ -7,12 +7,12 @@ import {useDispatch, useSelector} from 'react-redux';
 import '../css/SignIn.css';
 import {Link} from "react-router-dom";
 import {initUser} from "../Slices/UserSlice";
-import {initScenario} from "../Slices/ScenaioSlice";
+import {initScenario} from "../Slices/ScenarioSlice";
 
 
 export default function SignIn() {
     const dispatch = useDispatch();
-    const currentScenario = useSelector((state) => state.scenario.id);
+    const currentScenario = useSelector((state) => state.scenario.scenario);
     const currentUser = useSelector((state) => state.user.nickname);
 
 
@@ -30,13 +30,15 @@ export default function SignIn() {
         let result = await fetch('http://localhost:3000/users', options);
         await result.json().then((res) => {
             console.log(res);
+            dispatch(initScenario(res.data.scenario));
+            console.log(currentScenario);
         })
     } catch (error){
         console.log(error);
     }
     }
     return (
-        <div>
+        <div className="login-background">
             <div className="admin">
                 <Link to="adminlogin">
                     <button className="button-81">Admin</button>
@@ -54,7 +56,6 @@ export default function SignIn() {
                                maxLength="15" minLength="6"
                                onChange={(e) => {//TODO CHENA change to onSubmit
                                    dispatch(initUser(e.target.value));
-                                   dispatch(initScenario("5"));
                                }
                                }/>
                         <span className="focus-input100"></span>

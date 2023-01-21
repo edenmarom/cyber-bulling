@@ -5,6 +5,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Close';
+import AdminSideBar from './AdminSideBar';
 import "../css/AdminScenarioManagement.css"
 import {
     GridRowModes,
@@ -155,21 +156,24 @@ export default function AdminScenarioManagement() {
     ];
 
     return (
-        <div className='element'>
-            <h2>Scenario Management</h2>
-            <div style={{height: 400, width: 1000}}>
-                <DataGrid
-                    editMode="row"
-                    rows={scenario}
-                    getRowId={(row) => row._id}
-                    columns={columns}
-                    rowModesModel={rowModesModel}
-                    onRowEditStart={handleRowEditStart}
-                    onRowEditStop={handleRowEditStop}
-                    processRowUpdate={processRowUpdate}
-                    experimentalFeatures={{newEditingApi: true}}
-                />
+        <div>
+            <div className='element'>
+                <h2>Scenario Management</h2>
+                <div style={{height: 400, width: 1000}}>
+                    <DataGrid
+                        editMode="row"
+                        rows={scenario}
+                        getRowId={(row) => row._id}
+                        columns={columns}
+                        rowModesModel={rowModesModel}
+                        onRowEditStart={handleRowEditStart}
+                        onRowEditStop={handleRowEditStop}
+                        processRowUpdate={processRowUpdate}
+                        experimentalFeatures={{newEditingApi: true}}
+                    />
+                </div>
             </div>
+            <AdminSideBar></AdminSideBar>
         </div>
     );
 }

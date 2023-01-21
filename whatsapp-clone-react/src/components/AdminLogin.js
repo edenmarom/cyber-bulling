@@ -9,6 +9,7 @@ export default function AdminLogin() {
 
     const [password, setPassword] = useState();
     const adminLogin = async () => {
+        console.log(password)
         const options = {
             method: 'POST',
             headers: {
@@ -17,15 +18,18 @@ export default function AdminLogin() {
             body: JSON.stringify({password: password})
         }
         try {
-            let result = await fetch('http://localhost:3000/admin', options);
-            await result.json().then((res) => {
-                console.log("res",res);
-                console.log("res.message",res.message);
-                ///if(res.success){
+            let result = await fetch('http://localhost:3000/admin', options)
+            const result2 = await result
+            console.log(result2.status)
+            if(result2.status===201){
                 window.location.href="/scenariomanagement"
-            })
+            }
+            else if (result2.status===400){
+                alert("Password incorrect")//TODO Peleg need to return 200
+                window.location.href="/adminlogin"
+            }
         } catch (error) {
-            alert("Password incorrect")
+            alert("Error while calling /admin")
         }
     }
     return (

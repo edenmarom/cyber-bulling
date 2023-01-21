@@ -1,4 +1,4 @@
-import "../css/App.css";
+// import "../css/App.css";
 import React from "react";
 import Sidebar from "../components/Sidebar";
 import Chat from "../components/Chat";
@@ -20,7 +20,7 @@ const queryClient = new QueryClient();
 
 function App() {
     return (
-        <div className="app">
+        <div>
             <BrowserRouter>
                 <Routes>
                     <Route path="/">

@@ -1,15 +1,18 @@
-import {React, useState, createRef} from 'react';
+import {React, useState, createRef, useEffect} from 'react';
 // import {useDispatch} from 'react-redux';
 import '../css/SignIn.css';
 import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
+import {initScenario} from "../Slices/ScenarioSlice";
 
 
 export default function ChatPreview() {
-
     const currentUser = useSelector((state) => state.user.nickname);
+    const currentScenario = useSelector((state) => state.scenario.scenario);
 
-
+useEffect(()=>{
+    console.log(currentScenario);
+    })
     // Check the email and the password.
     // const signIn = async () => {
     //     let insert = true;
@@ -60,9 +63,9 @@ export default function ChatPreview() {
                 <div className="wrap-login100">
                     <span className="login100-form-title"><b>התחברות</b></span>
                     <span className="login100-form-subtitle m-b-16"> כינוי:{currentUser}</span>
-                    <span className="login100-form-subtitle m-b-16">מספר משתתפים:</span>
+                    <span className="login100-form-subtitle m-b-16"> מספר משתתפים:{currentScenario.numberOfUsers}</span>
                     <div className="container-login100-form-btn p-t-25">
-                        <Link to="/rooms/5">
+                        <Link to= {`/rooms/${currentScenario._id}`}>
                             <button className="login100-form-btn" style={{marginBottom: "20px"}}>המשך</button>
                         </Link>
                     </div>
