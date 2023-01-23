@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from 'react-redux';
 //     textNumberValidate,
 //     emailValidate,
 // } from "react-validations-components";
-import '../css/SignIn.css';
+import '../css/SignIn.moudle.css';
 import {Link} from "react-router-dom";
 import {initUser} from "../Slices/UserSlice";
 import {initScenario} from "../Slices/ScenarioSlice";

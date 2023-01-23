@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Avatar } from "@material-ui/core";
-import "../css/Chat.css";
+import "../css/Chat.moudle.css";
 import Sidebar from "./Sidebar";
 import { useSelector } from "react-redux";
 

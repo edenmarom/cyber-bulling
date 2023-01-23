@@ -1,32 +1,16 @@
-import {React, useEffect, useState} from 'react';
-import {NavLink, useParams} from 'react-router-dom';
-import {DataGrid} from "@mui/x-data-grid";
+import Table from 'rc-table';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
-import SaveIcon from '@mui/icons-material/Save';
-import CancelIcon from '@mui/icons-material/Close';
-import AdminSideBar from './AdminSideBar';
-import "../css/AdminScenarioManagement.css"
-import "./ScenarioDetails"
-import {
-    GridRowModes,
-    GridActionsCellItem,
-} from '@mui/x-data-grid-pro';
-import ScenarioDetails from "./ScenarioDetails";
+import {React, useEffect, useState} from "react";
+import {DataGrid} from "@mui/x-data-grid";
+import {GridActionsCellItem, GridRowModes} from "@mui/x-data-grid-pro";
+import SaveIcon from "@mui/icons-material/Save";
+import CancelIcon from "@mui/icons-material/Close";
+import "../css/ScenarioDetails.css"
 
-
-export default function AdminScenarioManagement() {
-    const [scenario, setScenarios] = useState([]);
-    const [selectedSenario, setSelectedScenario] = useState()
-    const getScenarios = () => {
-        fetch("http://localhost:3000/scenarios")
-            .then((res) => res.json())
-            .then((response) => setScenarios(response.data))
-    }
-
-    useEffect(() => {
-        getScenarios();
-    }, []);
+function ScenarioDetails(props){
+    console.log(props.scenario)
+const [data,setData] = useState([])
 
     const [rowModesModel, setRowModesModel] = useState({});
 
@@ -58,7 +42,6 @@ export default function AdminScenarioManagement() {
         try {
             let result = await fetch(`http://localhost:3000/scenarios/${id}`, options);
             await result.json().then(() => {
-                getScenarios();//TODO CHENA - check its refresh
             })
         } catch {
             alert("Can't delete scenario")
@@ -71,10 +54,10 @@ export default function AdminScenarioManagement() {
             [id]: {mode: GridRowModes.View, ignoreModifications: true},
         });
 
-        const editedRow = scenario.find((row) => row.scenarioId === id);
-        if (editedRow.isNew) {
-            setScenarios(scenario.filter((row) => row.scenarioId !== id));
-        }
+        // const editedRow = scenario.find((row) => row.scenarioId === id);
+        // if (editedRow.isNew) {
+        //     setScenarios(scenario.filter((row) => row.scenarioId !== id));
+        // }
     };
 
     const call = async (scenario) => {
@@ -98,20 +81,20 @@ export default function AdminScenarioManagement() {
     const processRowUpdate = (newRow) => {
         const updatedRow = {...newRow, isNew: false};
         console.log(updatedRow);
-        scenario.forEach((scenario) => {
-            if (scenario._id === newRow._id) {
-                call(updatedRow);
-                console.log(scenario);
-            }
-        })
+        // scenario.forEach((scenario) => {
+            // if (scenario._id === newRow._id) {
+            //     call(updatedRow);
+            //     console.log(scenario);
+            // }
+        // })
         return updatedRow;
     };
 
     const columns = [
-        {field: "_id", headerName: "Scenario id", width: 300,},
-        {field: "numberOfUsers", headerName: "Num Of Users", width: 120, editable: true, type: 'number'},
-        // { field: "CreationDate", headerName: "Creation Date", width: 120 , editable: true , type:'number'},//TODO CHENA waiting for
-        {field: "severity", headerName: "Severity", width: 120, editable: true, type: 'string'},
+        {field: "nickname", headerName: "User", width:200, editable: true, type: 'string'},
+        {field: "text", headerName: "Message", width: 200, editable: true, type: 'string'},
+        // { field: "CreationDate", headerName: "Creation Date", width: 200 , editable: true , type:'number'},//TODO CHENA waiting for
+        {field: "milliseconds_offset", headerName: "Offset", width: 200, editable: true, type: 'string'},
         {
             field: 'actions',
             type: 'actions',
@@ -157,39 +140,40 @@ export default function AdminScenarioManagement() {
         },
     ];
 
-    function onScenarioClick(event) {
-        if(selectedSenario){
-        if(selectedSenario._id === event.row._id) {
-            setSelectedScenario(null)
-        } else {
-            setSelectedScenario(event.row)
-        }}else {
-            setSelectedScenario(event.row)
+    useEffect(()=>{
+        let array = []
+        for (let i=0;i<props.scenario.messages.length;i++){
+            let message = props.scenario.messages[i]
+            console.log(message)
+            array.push({
+                nickname: message.nickname,
+                text: message.text,
+                milliseconds_offset:message.milliseconds_offset,
+                key: i
+            })
         }
-
-    }
-
-    return (
-        <div>
-            <div className='element'>
-                <h2>Scenario Management</h2>
-                <div style={{height: 400, width: 1000}}>
-                    <DataGrid
-                        editMode="row"
-                        rows={scenario}
-                        getRowId={(row) => row._id}
-                        columns={columns}
-                        rowModesModel={rowModesModel}
-                        onRowEditStart={handleRowEditStart}
-                        onRowEditStop={handleRowEditStop}
-                        processRowUpdate={processRowUpdate}
-                        experimentalFeatures={{newEditingApi: true}}
-                        onRowClick={onScenarioClick}
-                    />
-                    {selectedSenario ? <ScenarioDetails scenario={selectedSenario}/> : <></>}
-                </div>
+        setData(array)
+    },[])
+    // const data = [
+    //     { name: '', Message: 28, Offset: 'some where', key: '1' },
+    //     { name: 'Rose', age: 36, address: 'some where', key: '2' },
+    // ];
+    return(
+        <div className="popup">
+            <div className="table">
+                <DataGrid
+                    editMode="row"
+                    rows={data}
+                     getRowId={(row) => row.key}
+                    columns={columns}
+                    rowModesModel={rowModesModel}
+                    onRowEditStart={handleRowEditStart}
+                    onRowEditStop={handleRowEditStop}
+                    processRowUpdate={processRowUpdate}
+                    experimentalFeatures={{newEditingApi: true}}
+                />
             </div>
-            <AdminSideBar/>
         </div>
     );
 }
+export default ScenarioDetails;
