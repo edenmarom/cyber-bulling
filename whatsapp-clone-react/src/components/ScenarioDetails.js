@@ -31,21 +31,10 @@ const [data,setData] = useState([])
     };
 
     const handleDeleteClick = (id) => async () => {
-        console.log(id);
-        // let scenario = scenario.find((row) => row._id === id)
-        const options = {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        };
-        try {
-            let result = await fetch(`http://localhost:3000/scenarios/${id}`, options);
-            await result.json().then(() => {
-            })
-        } catch {
-            alert("Can't delete scenario")
-        }
+        console.log(id)
+        props.scenario.messages.splice(id,1);
+        console.log(props.scenario)
+        call(props.scenario)
     };
 
     const handleCancelClick = (id) => () => {
@@ -71,7 +60,7 @@ const [data,setData] = useState([])
         try {
             let result = await fetch(`http://localhost:3000/scenarios/${scenario._id}`, options);
             result.json().then((res) => {
-                alert(res)
+                console.log(res)
             })
         } catch {
             alert("Can't update scenario")
@@ -81,12 +70,9 @@ const [data,setData] = useState([])
     const processRowUpdate = (newRow) => {
         const updatedRow = {...newRow, isNew: false};
         console.log(updatedRow);
-        // scenario.forEach((scenario) => {
-            // if (scenario._id === newRow._id) {
-            //     call(updatedRow);
-            //     console.log(scenario);
-            // }
-        // })
+        //call(updatedRow);
+        props.scenario.messages[updatedRow.key] = updatedRow
+        call(props.scenario)
         return updatedRow;
     };
 

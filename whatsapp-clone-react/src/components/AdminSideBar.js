@@ -24,7 +24,9 @@ const AdminSideBar = () => {
 
     const useStyles = makeStyles({
         list: {
-            width: 250
+            width: 250,
+            position:"absolute",
+            left:"0px"
         },
         fullList: {
             width: "auto"
