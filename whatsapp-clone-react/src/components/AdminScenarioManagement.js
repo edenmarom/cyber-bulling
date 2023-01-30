@@ -170,7 +170,7 @@ export default function AdminScenarioManagement() {
     }
 
     return (
-        <div>
+        <div style={{position:"relative"}}>
             <div className='element'>
                 <h2>Scenario Management</h2>
                 <div style={{height: 400, width: 1000}}>
