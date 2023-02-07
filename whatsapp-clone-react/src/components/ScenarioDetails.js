@@ -6,11 +6,15 @@ import {DataGrid} from "@mui/x-data-grid";
 import {GridActionsCellItem, GridRowModes} from "@mui/x-data-grid-pro";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
-import "../css/ScenarioDetails.css"
+import "../css/ScenarioDetails.css";
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import AddMessage from './AddMessage';
+
 
 function ScenarioDetails(props){
-    console.log(props.scenario)
-const [data,setData] = useState([])
+    // console.log(props.scenario)
+    const [data,setData] = useState([])
+    const [add , setAdd] = useState(false);
 
     const [rowModesModel, setRowModesModel] = useState({});
 
@@ -130,7 +134,6 @@ const [data,setData] = useState([])
         let array = []
         for (let i=0;i<props.scenario.messages.length;i++){
             let message = props.scenario.messages[i]
-            console.log(message)
             array.push({
                 nickname: message.nickname,
                 text: message.text,
@@ -140,24 +143,36 @@ const [data,setData] = useState([])
         }
         setData(array)
     },[])
-    // const data = [
-    //     { name: '', Message: 28, Offset: 'some where', key: '1' },
-    //     { name: 'Rose', age: 36, address: 'some where', key: '2' },
-    // ];
+
+    function close(e){
+        if(e.target.className == "popup"){
+            props.setSelectedScenario(null);
+        }
+    }
+
     return(
-        <div className="popup">
-            <div className="table">
-                <DataGrid
-                    editMode="row"
-                    rows={data}
-                     getRowId={(row) => row.key}
-                    columns={columns}
-                    rowModesModel={rowModesModel}
-                    onRowEditStart={handleRowEditStart}
-                    onRowEditStop={handleRowEditStop}
-                    processRowUpdate={processRowUpdate}
-                    experimentalFeatures={{newEditingApi: true}}
-                />
+        <div>
+            <div className="popup" onClick={(e)=>close(e)}>
+                <div className='element2'>
+                    <div className="table1">
+                        <div className='titleDiv'>
+                            <h2 id="scenarioMiniTitle">all Messages</h2>
+                            <AddCircleOutlineIcon onClick={()=>setAdd(true)}/>
+                        </div>
+                        <DataGrid
+                            editMode="row"
+                            rows={data}
+                            getRowId={(row) => row.key}
+                            columns={columns}
+                            rowModesModel={rowModesModel}
+                            onRowEditStart={handleRowEditStart}
+                            onRowEditStop={handleRowEditStop}
+                            processRowUpdate={processRowUpdate}
+                            experimentalFeatures={{newEditingApi: true}}
+                        />
+                    </div>
+                </div>
+                {add ? <AddMessage scenario={props.scenario} setData={setData}/> : <></>}
             </div>
         </div>
     );

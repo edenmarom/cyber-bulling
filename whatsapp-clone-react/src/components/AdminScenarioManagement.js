@@ -13,11 +13,15 @@ import {
     GridActionsCellItem,
 } from '@mui/x-data-grid-pro';
 import ScenarioDetails from "./ScenarioDetails";
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import AddScenario from './AddScenario';
 
 
 export default function AdminScenarioManagement() {
     const [scenario, setScenarios] = useState([]);
-    const [selectedSenario, setSelectedScenario] = useState()
+    const [selectedSenario, setSelectedScenario] = useState(null)
+    const [add , setAdd] = useState(false);
+
     const getScenarios = () => {
         fetch("http://localhost:3000/scenarios")
             .then((res) => res.json())
@@ -37,7 +41,6 @@ export default function AdminScenarioManagement() {
     const handleRowEditStop = (params, event) => {
         event.defaultMuiPrevented = true;
     };
-
     const handleEditClick = (id) => () => {
         setRowModesModel({...rowModesModel, [id]: {mode: GridRowModes.Edit}});
     };
@@ -48,7 +51,6 @@ export default function AdminScenarioManagement() {
 
     const handleDeleteClick = (id) => async () => {
         console.log(id);
-        // let scenario = scenario.find((row) => row._id === id)
         const options = {
             method: 'DELETE',
             headers: {
@@ -110,7 +112,7 @@ export default function AdminScenarioManagement() {
     const columns = [
         {field: "_id", headerName: "Scenario id", width: 300,},
         {field: "numberOfUsers", headerName: "Num Of Users", width: 120, editable: true, type: 'number'},
-        // { field: "CreationDate", headerName: "Creation Date", width: 120 , editable: true , type:'number'},//TODO CHENA waiting for
+        // { field: "CreationDate", headerName: "Creation Date", width: 120 , editable: true , type:'number'},//TODO CHENA waiting for Peleg
         {field: "severity", headerName: "Severity", width: 120, editable: true, type: 'string'},
         {
             field: 'actions',
@@ -159,21 +161,29 @@ export default function AdminScenarioManagement() {
 
     function onScenarioClick(event) {
         if(selectedSenario){
-        if(selectedSenario._id === event.row._id) {
-            setSelectedScenario(null)
-        } else {
-            setSelectedScenario(event.row)
-        }}else {
+            if(selectedSenario._id === event.row._id) {
+                setSelectedScenario(null)
+            } else {
+                setSelectedScenario(event.row)
+            }}else {
             setSelectedScenario(event.row)
         }
+        setAdd(false)
+    }
 
+    function addScenario(){
+        setAdd(true)
     }
 
     return (
-        <div style={{position:"relative"}}>
+        <div>
+            <h2 id="scenarioTitle">Scenario Management</h2>
             <div className='element'>
-                <h2>Scenario Management</h2>
-                <div style={{height: 400, width: 1000}}>
+                <div className="tableScenario" >
+                    <div className='titleDiv'>
+                        <h2 id="scenarioMiniTitle">all scenarios</h2>
+                        <AddCircleOutlineIcon onClick={addScenario}/>
+                    </div>
                     <DataGrid
                         editMode="row"
                         rows={scenario}
@@ -186,9 +196,10 @@ export default function AdminScenarioManagement() {
                         experimentalFeatures={{newEditingApi: true}}
                         onRowClick={onScenarioClick}
                     />
-                    {selectedSenario ? <ScenarioDetails scenario={selectedSenario}/> : <></>}
                 </div>
             </div>
+            {selectedSenario ? <ScenarioDetails scenario={selectedSenario} setSelectedScenario={setSelectedScenario}/> : <></>}
+            {add ? <AddScenario/> : <></>}
             <AdminSideBar/>
         </div>
     );

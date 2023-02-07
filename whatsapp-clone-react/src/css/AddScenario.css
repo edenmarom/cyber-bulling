@@ -1,0 +1,63 @@
+.app1{
+    margin: 0 auto;
+    width: 500px;
+    height: 550px;
+    border: 1px solid rgb(46, 45, 45);
+    margin-top: 50px;
+}
+.app2{
+    margin: 0 auto;
+    width: 500px;
+    height: 300px;
+    border: 1px solid rgb(46, 45, 45);
+    /* margin-top: 50px; */
+    background-color: aliceblue;
+    position: fixed;
+    /* top: 10% + 400px; */
+    top:calc(90% - 400px);
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.allInfo{
+    margin: 30px;
+}
+h2{
+    padding-bottom: 5px;
+    border-bottom: 1px solid grey;
+}
+.buttons{
+    text-align: center;
+    margin-top: 30px;
+}
+
+.divLabel{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+label{
+    display: block;
+    margin-bottom: 7px;
+    margin-top: 7px;
+    font-size: 20px;
+}
+
+.buttonSave{
+    width: 80px;
+    height: 35px;
+    color: white;
+    background-color: rgb(54, 180, 238);
+    border: 1px solid rgb(54, 180, 238);
+    border-radius: 5px;
+    margin-left: 15px;
+}
+
+#outlined-basic{
+    width: 200px;
+    height: 10px;
+}

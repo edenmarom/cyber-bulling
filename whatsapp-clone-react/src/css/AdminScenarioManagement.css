@@ -1,10 +1,38 @@
 .element{
     align-content: center;
-    margin:0 auto;
     background: #dadadc !important;
+    height: 430px;
+    width: 800px;
+    margin-left: 250px;
+    margin: auto;
+    margin-top:20px;
 }
 .table{
     direction: ltr;
     background-color: #ffffff;
     align-content: center;
+    text-align: center;
+}
+
+.tableScenario{
+    height: 400px;
+    width: 800px;
+}
+
+#scenarioTitle{
+    font-size: large;
+    font-weight: 700;
+}
+
+#scenarioMiniTitle{
+    font-size:medium;
+    font-weight: 600;
+}
+
+.titleDiv{
+    display:flex;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+    align-items: center;
+    height: 30px;
 }
