@@ -1,4 +1,3 @@
-import Table from 'rc-table';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import {React, useEffect, useState} from "react";
@@ -84,50 +83,62 @@ function ScenarioDetails(props){
         {field: "nickname", headerName: "User", width:200, editable: true, type: 'string'},
         {field: "text", headerName: "Message", width: 200, editable: true, type: 'string'},
         // { field: "CreationDate", headerName: "Creation Date", width: 200 , editable: true , type:'number'},//TODO CHENA waiting for
-        {field: "milliseconds_offset", headerName: "Offset", width: 200, editable: true, type: 'string'},
+        {field: "milliseconds_offset", headerName: "Offset", width: 100, editable: true, type: 'string' ,  valueGetter: ({ value }) => "0:"+ value },
         {
             field: 'actions',
             type: 'actions',
-            headerName: 'Actions',
-            width: 100,
+            headerName: <AddCircleOutlineIcon onClick={()=>setAdd(true)}/>,
+            width: 200,
             cellClassName: 'actions',
             getActions: ({id}) => {
                 const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
 
                 if (isInEditMode) {
                     return [
-                        <GridActionsCellItem
-                            icon={<SaveIcon/>}
-                            label="Save"
-                            onClick={handleSaveClick(id)}
-                        />,
-                        <GridActionsCellItem
-                            icon={<CancelIcon/>}
-                            label="Cancel"
-                            className="textPrimary"
-                            onClick={handleCancelClick(id)}
-                            color="inherit"
-                        />,
+                        <div style={{textAlign:"center"}}>
+                            <GridActionsCellItem
+                                icon={<SaveIcon/>}
+                                label="Save"
+                                onClick={handleSaveClick(id)}
+                            />
+                            <p style={{marginBotton:"0px"}}>save</p>
+                        </div> ,
+                        <div style={{textAlign:"center"}}>
+                            <GridActionsCellItem
+                                icon={<CancelIcon/>}
+                                label="Cancel"
+                                className="textPrimary"
+                                onClick={handleCancelClick(id)}
+                                color="inherit"
+                            />
+                            <p style={{marginBotton:"0px"}}>cancel</p>
+                        </div>
                     ];
                 }
 
                 return [
-                    <GridActionsCellItem
-                        icon={<EditIcon/>}
-                        label="Edit"
-                        className="textPrimary"
-                        onClick={handleEditClick(id)}
-                        color="inherit"
-                    />,
-                    <GridActionsCellItem
-                        icon={<DeleteIcon/>}
-                        label="Delete"
-                        onClick={handleDeleteClick(id)}
-                        color="inherit"
-                    />,
+                    <div style={{textAlign:"center"}}>
+                        <GridActionsCellItem
+                            icon={<DeleteIcon/>}
+                            label="Delete"
+                            onClick={handleDeleteClick(id)}
+                            color="inherit"
+                        />
+                        {/* <p style={{marginBotton:"0px"}}>delete</p>  */}
+                    </div>  ,
+                    <div style={{textAlign:"center"}}>
+                        <GridActionsCellItem
+                            icon={<EditIcon/>}
+                            label="Edit"
+                            className="textPrimary"
+                            onClick={handleEditClick(id)}
+                            color="inherit"
+                        />
+                        {/* <p style={{marginBotton:"0px"}}>edit</p>  */}
+                    </div>
                 ];
             },
-        },
+        }
     ];
 
     useEffect(()=>{
@@ -155,10 +166,6 @@ function ScenarioDetails(props){
             <div className="popup" onClick={(e)=>close(e)}>
                 <div className='element2'>
                     <div className="table1">
-                        <div className='titleDiv'>
-                            <h2 id="scenarioMiniTitle">all Messages</h2>
-                            <AddCircleOutlineIcon onClick={()=>setAdd(true)}/>
-                        </div>
                         <DataGrid
                             editMode="row"
                             rows={data}

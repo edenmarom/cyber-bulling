@@ -62,7 +62,7 @@ export default function AddScenario(){
     return (
         <div className='app1'>
             <div className='allInfo'>
-                <h2>Add Scenario</h2>
+                <h2 className='h2'>Add Scenario</h2>
                 <form>
                     <div className='links'>
                         <div className='divLabel'>
