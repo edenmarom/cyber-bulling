@@ -1,6 +1,6 @@
 import {React, useEffect, useState} from 'react';
 import {NavLink, useParams} from 'react-router-dom';
-import {DataGrid} from "@mui/x-data-grid";
+import { DataGrid } from "@mui/x-data-grid";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import SaveIcon from '@mui/icons-material/Save';
@@ -15,6 +15,7 @@ import {
 import ScenarioDetails from "./ScenarioDetails";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import AddScenario from './AddScenario';
+import Box from '@mui/material/Box';
 
 
 export default function AdminScenarioManagement() {
@@ -30,6 +31,7 @@ export default function AdminScenarioManagement() {
 
     useEffect(() => {
         getScenarios();
+        console.log(scenario)
     }, []);
 
     const [rowModesModel, setRowModesModel] = useState({});
@@ -112,48 +114,61 @@ export default function AdminScenarioManagement() {
     const columns = [
         {field: "_id", headerName: "Scenario id", width: 300,},
         {field: "numberOfUsers", headerName: "Num Of Users", width: 120, editable: true, type: 'number'},
+        {field: "commentType", headerName: "commentType", width: 150, editable: true, type: 'text'},
         // { field: "CreationDate", headerName: "Creation Date", width: 120 , editable: true , type:'number'},//TODO CHENA waiting for Peleg
         {field: "severity", headerName: "Severity", width: 120, editable: true, type: 'string'},
         {
             field: 'actions',
             type: 'actions',
             headerName: 'Actions',
-            width: 100,
+            width: 200,
             cellClassName: 'actions',
             getActions: ({id}) => {
                 const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
 
                 if (isInEditMode) {
                     return [
-                        <GridActionsCellItem
-                            icon={<SaveIcon/>}
-                            label="Save"
-                            onClick={handleSaveClick(id)}
-                        />,
-                        <GridActionsCellItem
-                            icon={<CancelIcon/>}
-                            label="Cancel"
-                            className="textPrimary"
-                            onClick={handleCancelClick(id)}
-                            color="inherit"
-                        />,
+                        <div style={{textAlign:"center"}}>
+                            <GridActionsCellItem
+                                icon={<SaveIcon/>}
+                                label="Save"
+                                onClick={handleSaveClick(id)}
+                            />
+                            <p style={{marginBotton:"0px"}}>save</p>
+                        </div> ,
+                        <div style={{textAlign:"center"}}>
+                            <GridActionsCellItem
+                                icon={<CancelIcon/>}
+                                label="Cancel"
+                                className="textPrimary"
+                                onClick={handleCancelClick(id)}
+                                color="inherit"
+                            />
+                            <p style={{marginBotton:"0px"}}>cancel</p>
+                        </div>
                     ];
                 }
 
                 return [
-                    <GridActionsCellItem
-                        icon={<EditIcon/>}
-                        label="Edit"
-                        className="textPrimary"
-                        onClick={handleEditClick(id)}
-                        color="inherit"
-                    />,
-                    <GridActionsCellItem
-                        icon={<DeleteIcon/>}
-                        label="Delete"
-                        onClick={handleDeleteClick(id)}
-                        color="inherit"
-                    />,
+                    <div style={{textAlign:"center"}}>
+                        <GridActionsCellItem
+                            icon={<DeleteIcon/>}
+                            label="Delete"
+                            onClick={handleDeleteClick(id)}
+                            color="inherit"
+                        />
+                        <p style={{marginBotton:"0px"}}>delete</p>
+                    </div>  ,
+                    <div style={{textAlign:"center"}}>
+                        <GridActionsCellItem
+                            icon={<EditIcon/>}
+                            label="Edit"
+                            className="textPrimary"
+                            onClick={handleEditClick(id)}
+                            color="inherit"
+                        />
+                        <p style={{marginBotton:"0px"}}>edit</p>
+                    </div>
                 ];
             },
         },
@@ -176,26 +191,35 @@ export default function AdminScenarioManagement() {
     }
 
     return (
-        <div>
+        <div className="background">
             <h2 id="scenarioTitle">Scenario Management</h2>
             <div className='element'>
                 <div className="tableScenario" >
                     <div className='titleDiv'>
-                        <h2 id="scenarioMiniTitle">all scenarios</h2>
                         <AddCircleOutlineIcon onClick={addScenario}/>
+                        <h2 id="scenarioMiniTitle">all scenarios</h2>
                     </div>
-                    <DataGrid
-                        editMode="row"
-                        rows={scenario}
-                        getRowId={(row) => row._id}
-                        columns={columns}
-                        rowModesModel={rowModesModel}
-                        onRowEditStart={handleRowEditStart}
-                        onRowEditStop={handleRowEditStop}
-                        processRowUpdate={processRowUpdate}
-                        experimentalFeatures={{newEditingApi: true}}
-                        onRowClick={onScenarioClick}
-                    />
+                    <Box sx={{ height: '90%', width: '100%'}}>
+                        <DataGrid
+                            editMode="row"
+                            rows={scenario}
+                            getRowId={(row) => row._id}
+                            columns={columns}
+                            rowModesModel={rowModesModel}
+                            onRowEditStart={handleRowEditStart}
+                            onRowEditStop={handleRowEditStop}
+                            processRowUpdate={processRowUpdate}
+                            experimentalFeatures={{newEditingApi: true}}
+                            onRowClick={onScenarioClick}
+                            getRowHeight={() => 'auto'}
+                            getCellClassName={(params) => {
+                                if (params.field !== 'severity') {
+                                    return '';
+                                }
+                                return params.value == "bad" ? 'bad' : 'good';
+                            }}
+                        />
+                    </Box>
                 </div>
             </div>
             {selectedSenario ? <ScenarioDetails scenario={selectedSenario} setSelectedScenario={setSelectedScenario}/> : <></>}
