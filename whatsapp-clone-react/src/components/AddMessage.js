@@ -46,12 +46,12 @@ export default function AddMessage(props){
 
     return (
         <div className='app2'>
-            <div className='allInfo'>
-                <h2>Add Scenario</h2>
+            <div>
+                <h2 className='h2'>Add Scenario</h2>
                 <form>
                     <div className='links'>
                         <div className='divLabel'>
-                            <label htmlFor='text'>:text</label>
+                            {/* <label htmlFor='text'>:text</label> */}
                             <TextField id="outlined-basic" label="text" variant="outlined"
                                        value={message.text}
                                        onChange={(event)=>{setMessage(previousState => {
@@ -60,7 +60,7 @@ export default function AddMessage(props){
 
                         </div>
                         <div className='divLabel'>
-                            <label htmlFor='milliseconds_offset'>:milliseconds_offset</label>
+                            {/* <label htmlFor='milliseconds_offset'>:milliseconds_offset</label> */}
                             <TextField id="outlined-basic" label="milliseconds_offset" variant="outlined"
                                        type="number"
                                        value={message.milliseconds_offset}
@@ -70,7 +70,7 @@ export default function AddMessage(props){
 
                         </div>
                         <div className='divLabel'>
-                            <label htmlFor='nickname'>:nickname</label>
+                            {/* <label htmlFor='nickname'>:nickname</label> */}
                             <TextField id="outlined-basic" label="nickname" variant="outlined"
                                        value={message.nickname}
                                        onChange={(event)=>{setMessage(previousState => {
