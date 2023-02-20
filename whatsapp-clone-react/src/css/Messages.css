@@ -1,0 +1,125 @@
+.background{
+    background-color: #E5E5E5;
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: fixed;
+    z-index: 2;
+    top: 0;
+}
+
+.element3{
+    align-content: center;
+    position: fixed;
+    left:calc(50% - 450px + 120px);
+    background: #FFFFFF!important;
+    height: 80%;
+    width: 900px;
+    margin-top:20px;
+}
+.element3 .table{
+    direction: ltr;
+    background-color: #ffffff;
+    align-content: center;
+    text-align: center;
+}
+
+.element3 .tableScenario{
+    height: 100%;
+}
+
+#scenarioTitle{
+    margin-right: calc(50% - 80px);
+    font-family: 'Mulish';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 30px;
+    letter-spacing: 0.3px;
+}
+
+.element3 #scenarioMiniTitle{
+    font-family: 'Muli';
+    font-size: 19px;
+}
+
+.element3 .titleDiv{
+    display:flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    margin: 0px 30px;
+}
+
+.element3 .MuiTablePagination-selectLabel{
+    display: none!important;
+}
+
+.element3 .css-levciy-MuiTablePagination-displayedRows{
+    margin-bottom: 0;
+}
+
+.element3 .MuiDataGrid-cell--textRight {
+    direction: rtl;
+}
+
+.element3 .MuiDataGrid-row  {
+    border-bottom: 1px solid rgb(219, 219, 219);
+    align-items: center;
+    min-height: 60px!important;
+}
+
+.element3 .MuiDataGrid-cell {
+    border-bottom: 0px!important;
+    margin:5px 2px;
+}
+
+.element3 .MuiDataGrid-cellContent{
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+    color: #6D6B80;
+}
+
+.element3 p{
+    margin-bottom: 0px!important;
+}
+
+.element3 .css-1jbbcbn-MuiDataGrid-columnHeaderTitle{
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+    color: #6D6B80;
+    width: 106px;
+    height: 24px;
+}
+
+.element3 .css-1w5m2wr-MuiDataGrid-virtualScroller {
+    background: #ffffff;
+}
+
+.element3 .MuiDataGrid-actionsCell{
+    width: 100%;
+    justify-content: space-around;
+    color:#8E8E93;
+}
+
+.element3 .MuiDataGrid-iconSeparator{
+    display: none!important;
+}
+
+
+.participant{
+    background-color: rgba(59, 208, 56, 0.33);
+}
+
+.noParticipant{
+    background-color: rgba(33, 33, 33, 0.08);
+}

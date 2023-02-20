@@ -216,14 +216,14 @@ export default function AdminScenarioManagement() {
                                 if (params.field !== 'severity') {
                                     return '';
                                 }
-                                return params.value == "bad" ? 'bad' : 'good';
+                                return params.value === "bad" ? 'bad' : 'good';
                             }}
                         />
                     </Box>
                 </div>
             </div>
             {selectedSenario ? <ScenarioDetails scenario={selectedSenario} setSelectedScenario={setSelectedScenario}/> : <></>}
-            {add ? <AddScenario/> : <></>}
+            {add ? <AddScenario setAdd={setAdd}/> : <></>}
             <AdminSideBar/>
         </div>
     );

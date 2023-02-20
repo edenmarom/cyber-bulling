@@ -3,8 +3,6 @@
     width: 100%;
     height: 100%;
     display: block;
-    width: 100%;
-    height: 100%;
     position: fixed;
     z-index: 2;
     top: 0;
@@ -17,17 +15,16 @@
     background: #FFFFFF!important;
     height: 80%;
     width: 900px;
-
     margin-top:20px;
 }
-.table{
+.element .table{
     direction: ltr;
     background-color: #ffffff;
     align-content: center;
     text-align: center;
 }
 
-.tableScenario{
+.element .tableScenario{
     height: 100%;
 }
 
@@ -41,12 +38,12 @@
     letter-spacing: 0.3px;
 }
 
-#scenarioMiniTitle{
+.element #scenarioMiniTitle{
     font-family: 'Muli';
     font-size: 19px;
 }
 
-.titleDiv{
+.element .titleDiv{
     display:flex;
     flex-direction: row-reverse;
     justify-content: space-between;
@@ -55,40 +52,41 @@
     margin: 0px 30px;
 }
 
-.MuiTablePagination-selectLabel{
+.element .MuiTablePagination-selectLabel{
     display: none!important;
 }
 
-.css-levciy-MuiTablePagination-displayedRows{
+.element .css-levciy-MuiTablePagination-displayedRows{
     margin-bottom: 0;
 }
 
-.MuiDataGrid-cell--textRight {
+.element .MuiDataGrid-cell--textRight {
     direction: rtl;
 }
 
-.MuiDataGrid-row  {
+.element .MuiDataGrid-row  {
     border-bottom: 1px solid rgb(219, 219, 219);
     align-items: center;
+    min-height: 60px!important;
 }
 
-.MuiDataGrid-cell {
+.element .MuiDataGrid-cell {
     border-bottom: 0px!important;
     margin:5px 2px;
 }
 
-.MuiDataGrid-cellContent{
+.element .MuiDataGrid-cellContent{
     font-family: 'Mulish';
     font-style: normal;
     font-weight: 600;
     font-size: 14px;
 }
 
-p{
+.element p{
     margin-bottom: 0px!important;
 }
 
-.css-1jbbcbn-MuiDataGrid-columnHeaderTitle{
+.element .css-1jbbcbn-MuiDataGrid-columnHeaderTitle{
     font-family: 'Mulish';
     font-style: normal;
     font-weight: 700;
@@ -131,16 +129,16 @@ p{
     text-transform: uppercase;
 }
 
-.css-1w5m2wr-MuiDataGrid-virtualScroller {
+.element .css-1w5m2wr-MuiDataGrid-virtualScroller {
     background: #ffffff;
 }
 
-.MuiDataGrid-actionsCell{
+.element .MuiDataGrid-actionsCell{
     width: 100%;
     justify-content: space-around;
     color:#8E8E93;
 }
 
-.MuiDataGrid-iconSeparator{
+.element .MuiDataGrid-iconSeparator{
     display: none!important;
 }

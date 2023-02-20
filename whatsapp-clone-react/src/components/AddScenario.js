@@ -2,7 +2,7 @@ import {React , useState}  from 'react';
 import { TextField } from '@material-ui/core';
 import '../css/AddScenario.css'
 
-export default function AddScenario(){
+export default function AddScenario(props){
 
     let firstScenario = {
         tag:"",
@@ -59,81 +59,89 @@ export default function AddScenario(){
         }
     }
 
+    function close(e){
+        if(e.target.className == "popup"){
+            props.setAdd(false);
+        }
+    }
+
     return (
-        <div className='app1'>
-            <div className='allInfo'>
-                <h2 className='h2'>Add Scenario</h2>
-                <form>
-                    <div className='links'>
-                        <div className='divLabel'>
-                            <label htmlFor='tag'>:tag</label>
-                            <TextField id="outlined-basic" label="tag" variant="outlined"
-                                       value={scenario.tag}
-                                       onChange={(event)=>{setScenario(previousState => {
-                                           return { ...previousState, tag: event.target.value }
-                                       })}}
-                            />
-                        </div>
-                        <div className='divLabel'>
-                            <label htmlFor='severity'>:severity</label>
-                            <TextField id="outlined-basic" label="severity" variant="outlined"
-                                       value={scenario.severity}
-                                       onChange={(event)=>{setScenario(previousState => {
-                                           return { ...previousState, severity: event.target.value }
-                                       })}}/>
+        <div className='popup' onClick={(e)=>close(e)}>
+            <div className='app1'>
+                <div>
+                    <h2 className='h2'>Add Scenario</h2>
+                    <form>
+                        <div className='links'>
+                            <div className='divLabel'>
+                                {/* <label htmlFor='tag'>:tag</label> */}
+                                <TextField id="outlined-basic" label="tag" variant="outlined"
+                                           value={scenario.tag}
+                                           onChange={(event)=>{setScenario(previousState => {
+                                               return { ...previousState, tag: event.target.value }
+                                           })}}
+                                />
+                            </div>
+                            <div className='divLabel'>
+                                {/* <label htmlFor='severity'>:severity</label> */}
+                                <TextField id="outlined-basic" label="severity" variant="outlined"
+                                           value={scenario.severity}
+                                           onChange={(event)=>{setScenario(previousState => {
+                                               return { ...previousState, severity: event.target.value }
+                                           })}}/>
 
-                        </div>
-                        <div className='divLabel'>
-                            <label htmlFor='commentType'>:comment type</label>
-                            <TextField id="outlined-basic" label="commentType" variant="outlined"
-                                       value={scenario.commentType}
-                                       onChange={(event)=>{setScenario(previousState => {
-                                           return { ...previousState, commentType: event.target.value }
-                                       })}}/>
+                            </div>
+                            <div className='divLabel'>
+                                {/* <label htmlFor='commentType'>:comment type</label> */}
+                                <TextField id="outlined-basic" label="commentType" variant="outlined"
+                                           value={scenario.commentType}
+                                           onChange={(event)=>{setScenario(previousState => {
+                                               return { ...previousState, commentType: event.target.value }
+                                           })}}/>
 
-                        </div>
-                        <div className='divLabel'>
-                            <label htmlFor='numberOfUsers'>:number of users</label>
-                            <TextField id="outlined-basic" label="numberOfUsers" variant="outlined"
-                                       type="number"
-                                       value={scenario.numberOfUsers}
-                                       onChange={(event)=>{setScenario(previousState => {
-                                           return { ...previousState, numberOfUsers: event.target.value }
-                                       })}}/>
-                        </div>
-                        {/* <h3 style={{textAlign:"center" , color:"blue"}}>message</h3> */}
-                        <div className='divLabel'>
-                            <label htmlFor='text'>:text</label>
-                            <TextField id="outlined-basic" label="text" variant="outlined"
-                                       value={message.text}
-                                       onChange={(event)=>{setMessage(previousState => {
-                                           return { ...previousState, text: event.target.value }
-                                       })}}
-                            />
-                        </div>
-                        <div className='divLabel'>
-                            <label htmlFor='milliseconds_offset'>:milliseconds offset</label>
-                            <TextField id="outlined-basic" label="milliseconds_offset" variant="outlined"
-                                       type="number"
-                                       value={message.milliseconds_offset}
-                                       onChange={(event)=>{setMessage(previousState => {
-                                           return { ...previousState, milliseconds_offset: event.target.value }
-                                       })}}/>
+                            </div>
+                            <div className='divLabel'>
+                                {/* <label htmlFor='numberOfUsers'>:number of users</label> */}
+                                <TextField id="outlined-basic" label="numberOfUsers" variant="outlined"
+                                           type="number"
+                                           value={scenario.numberOfUsers}
+                                           onChange={(event)=>{setScenario(previousState => {
+                                               return { ...previousState, numberOfUsers: event.target.value }
+                                           })}}/>
+                            </div>
+                            {/* <h3 style={{textAlign:"center" , color:"blue"}}>message</h3> */}
+                            <div className='divLabel'>
+                                {/* <label htmlFor='text'>:text</label> */}
+                                <TextField id="outlined-basic" label="text" variant="outlined"
+                                           value={message.text}
+                                           onChange={(event)=>{setMessage(previousState => {
+                                               return { ...previousState, text: event.target.value }
+                                           })}}
+                                />
+                            </div>
+                            <div className='divLabel'>
+                                {/* <label htmlFor='milliseconds_offset'>:milliseconds offset</label> */}
+                                <TextField id="outlined-basic" label="milliseconds_offset" variant="outlined"
+                                           type="number"
+                                           value={message.milliseconds_offset}
+                                           onChange={(event)=>{setMessage(previousState => {
+                                               return { ...previousState, milliseconds_offset: event.target.value }
+                                           })}}/>
 
-                        </div>
-                        <div className='divLabel'>
-                            <label htmlFor='nickname'>:nickname</label>
-                            <TextField id="outlined-basic" label="nickname" variant="outlined"
-                                       value={message.nickname}
-                                       onChange={(event)=>{setMessage(previousState => {
-                                           return { ...previousState, nickname: event.target.value }
-                                       })}}/>
+                            </div>
+                            <div className='divLabel'>
+                                {/* <label htmlFor='nickname'>:nickname</label> */}
+                                <TextField id="outlined-basic" label="nickname" variant="outlined"
+                                           value={message.nickname}
+                                           onChange={(event)=>{setMessage(previousState => {
+                                               return { ...previousState, nickname: event.target.value }
+                                           })}}/>
 
+                            </div>
                         </div>
+                    </form>
+                    <div className='buttons'>
+                        <button className='buttonSave' onClick={()=>{save()}}>save</button>
                     </div>
-                </form>
-                <div className='buttons'>
-                    <button className='buttonSave' onClick={()=>{save()}}>save</button>
                 </div>
             </div>
         </div>

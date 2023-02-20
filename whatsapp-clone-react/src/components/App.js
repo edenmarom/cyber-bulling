@@ -15,6 +15,8 @@ import AdminLogin from "./AdminLogin";
 import ChatPreview from "./ChatPreview";
 import AdminPage from "./AdminPage";
 import AdminScenarioManagement from "./AdminScenarioManagement";
+import ScenarioReactions from '../components/ScenariosReactions'
+import Messages from "./Messages";
 
 const queryClient = new QueryClient();
 
@@ -30,14 +32,18 @@ function App() {
                         <Route path="rooms/:roomId" element={<Chat/>}/>
                         <Route path="adminpage" element={<AdminPage/>}/>
                         <Route path="scenariomanagement" element={<AdminScenarioManagement/>}/>
+                        <Route path="scenarioReactions">
+                            <Route index element={<ScenarioReactions/>}/>
+                            <Route path=":scenarioId" element={<Messages/>}/>
+                        </Route>
                     </Route>
                 </Routes>
             </BrowserRouter>
 
-            {/*<QueryClientProvider client={queryClient}>*/}
+            {/*{/<QueryClientProvider client={queryClient}>/}*/}
             {/*    <Example/>*/}
-            {/*</QueryClientProvider>*/}
-            {/*</div>*/}
+            {/*{/</QueryClientProvider>/}*/}
+            {/*{/</div>/}*/}
         </div>
     );
 }
