@@ -13,7 +13,7 @@ import AddScenario from './AddScenario';
 import Box from '@mui/material/Box';
 
 
-export default function ScenariosReactions() {
+export default function ScenarioReactions() {
     const [scenario, setScenarios] = useState([]);
     const [participants, setParticipants] = useState([]);
     const [selectedSenario, setSelectedScenario] = useState(null)
@@ -51,7 +51,7 @@ export default function ScenariosReactions() {
 
     return (
         <div className="background">
-            <h2 id="scenarioTitle">Scenario Management</h2>
+            <h2 id="scenarioTitle">Scenario Reactions</h2>
             <div className='element' style={{width:"750px"}}>
                 <div className="tableScenario" >
                     <div className='titleDiv'>

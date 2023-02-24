@@ -79,11 +79,25 @@ function ScenarioDetails(props){
         return updatedRow;
     };
 
+    function changeOffset(value){
+        if(value >=60){
+            if(String(value%60).length == 1){
+                return Math.floor(value/60) + ":0" + value%60
+            }
+            else return Math.floor(value/60) + ":" + value%60
+        } else if(String(value).length == 1){
+            return "0:0" + value
+        }
+        else {
+            return "0:" + value
+        }
+    }
+
     const columns = [
         {field: "nickname", headerName: "User", width:200, editable: true, type: 'string'},
         {field: "text", headerName: "Message", width: 200, editable: true, type: 'string'},
         // { field: "CreationDate", headerName: "Creation Date", width: 200 , editable: true , type:'number'},//TODO CHENA waiting for
-        {field: "milliseconds_offset", headerName: "Offset", width: 100, editable: true, type: 'string' ,  valueGetter: ({ value }) => "0:"+ value },
+        {field: "milliseconds_offset", headerName: "Offset", width: 100, editable: true, type: 'string' ,  valueGetter: ({ value }) => changeOffset(value)},
         {
             field: 'actions',
             type: 'actions',
@@ -143,8 +157,9 @@ function ScenarioDetails(props){
 
     useEffect(()=>{
         let array = []
-        for (let i=0;i<props.scenario.messages.length;i++){
-            let message = props.scenario.messages[i]
+        let sorted = props.scenario.messages.sort((a,b)=>a.milliseconds_offset - b.milliseconds_offset)
+        for (let i=0;i<sorted.length;i++){
+            let message = sorted[i]
             array.push({
                 nickname: message.nickname,
                 text: message.text,
@@ -152,6 +167,7 @@ function ScenarioDetails(props){
                 key: i
             })
         }
+        console.log(array)
         setData(array)
     },[])
 
