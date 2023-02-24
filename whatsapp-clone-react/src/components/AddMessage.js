@@ -47,7 +47,7 @@ export default function AddMessage(props){
     return (
         <div className='app2'>
             <div>
-                <h2 className='h2'>Add Scenario</h2>
+                <h2 className='h2'>Add Message</h2>
                 <form>
                     <div className='links'>
                         <div className='divLabel'>

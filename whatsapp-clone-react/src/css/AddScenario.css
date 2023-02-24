@@ -1,7 +1,7 @@
 .app1{
     margin: 0 auto;
     width: 400px;
-    height: 560px;
+    height: 620px;
     border: 1px solid rgb(46, 45, 45);
     background-color: aliceblue;
     position: fixed;
@@ -54,7 +54,12 @@ label{
     margin-left: 15px;
 }
 
-#outlined-basic{
+/* #outlined-basic{
     width: 200px;
     height: 10px;
+} */
+
+.MuiOutlinedInput-root{
+    width: 200px;
+    height: 50px;
 }
