@@ -29,7 +29,7 @@ function App() {
                         <Route index element={<SignIn/>}/>
                         <Route path="adminlogin" element={<AdminLogin/>}/>
                         <Route path="chatpreview" element={<ChatPreview/>}/>
-                        <Route path="rooms/:roomId" element={<Chat/>}/>
+                        <Route path="chat" element={<Chat/>}/>
                         <Route path="adminpage" element={<AdminPage/>}/>
                         <Route path="scenariomanagement" element={<AdminScenarioManagement/>}/>
                         <Route path="scenarioReactions">

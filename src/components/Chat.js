@@ -15,7 +15,7 @@ function Chat() {
   const defaultUserDisplayColor = "black";
   const userColors = new Map();
   const currentUser = useSelector((state) => state.user);
-  const messages = useSelector((state) => state.scenario.scenario.messages);
+  const messages = useSelector((state) => state.scenario.messages);
   const displayedMessagesRef = useRef(displayedMessages);
   displayedMessagesRef.current = displayedMessages;
   const lastMessageRef = useRef(null);
@@ -73,7 +73,7 @@ function Chat() {
       );
       console.log(userMessages);
       // TODO send to server
-    }, messages[messages.length - 1].timeOffset + delayTimeToSendToServerUserMessages);
+    }, messages[messages.length - 1]?.timeOffset + delayTimeToSendToServerUserMessages);
 
   const getRandomReadableColor = () => {
     const red = Math.floor(Math.random() * 256);
@@ -89,58 +89,60 @@ function Chat() {
   }, []);
 
   return (
-    <div className="app_body">
-      <Sidebar participants={participants} />
-      <div className="chat">
-        <div className="chat_header">
-          <Avatar />
-          <div className="chat_headerInfo">
-            <h3 className="chat-room-name">{chatName}</h3>
-            <p className="chat-room-last-seen">{participants.join(", ")}</p>
-          </div>
-          <div className="chat_headerRight"></div>
-        </div>
-        <div className="chat_body">
-          {displayedMessages.map((message, index) => (
-            <div
-              key={index}
-              className={`chat_message ${
-                message.nickname === currentUser.nickname && "chat_receiver"
-              }`}
-            >
-              <span
-                className={`chat_name ${
-                  message.nickname === currentUser.nickname && "hide"
-                }`}
-                style={{
-                  color:
-                    message.nickname !== currentUser.nickname
-                      ? message.color
-                      : defaultUserDisplayColor,
-                }}
-              >
-                {message.nickname}
-              </span>
-              <div className="message" ref={lastMessageRef}>
-                {message.text}
-              </div>
-              <span className="chat_timestemp">{message.displayTime}</span>
+    <div className="chat-full-page">
+      <div className="app_body">
+        <Sidebar participants={participants} />
+        <div className="chat">
+          <div className="chat_header">
+            <Avatar />
+            <div className="chat_headerInfo">
+              <h3 className="chat-room-name">{chatName}</h3>
+              <p className="chat-room-last-seen">{participants.join(", ")}</p>
             </div>
-          ))}
-        </div>
-        <div className="chat_footer">
-          <form>
-            <input
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              type="text"
-              placeholder="הקלד הודעה"
-            />
-            <button type="submit" onClick={sendMessage}>
-              {" "}
-              Send a Message
-            </button>
-          </form>
+            <div className="chat_headerRight"></div>
+          </div>
+          <div className="chat_body">
+            {displayedMessages.map((message, index) => (
+              <div
+                key={index}
+                className={`chat_message ${
+                  message.nickname === currentUser.nickname && "chat_receiver"
+                }`}
+              >
+                <span
+                  className={`chat_name ${
+                    message.nickname === currentUser.nickname && "hide"
+                  }`}
+                  style={{
+                    color:
+                      message.nickname !== currentUser.nickname
+                        ? message.color
+                        : defaultUserDisplayColor,
+                  }}
+                >
+                  {message.nickname}
+                </span>
+                <div className="message" ref={lastMessageRef}>
+                  {message.text}
+                </div>
+                <span className="chat_timestemp">{message.displayTime}</span>
+              </div>
+            ))}
+          </div>
+          <div className="chat_footer">
+            <form>
+              <input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                type="text"
+                placeholder="הקלד הודעה"
+              />
+              <button type="submit" onClick={sendMessage}>
+                {" "}
+                Send a Message
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </div>

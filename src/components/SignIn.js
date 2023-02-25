@@ -27,12 +27,14 @@ export default function SignIn() {
         body: JSON.stringify({nickname: currentUser})
     }
     try {
-        let result = await fetch('http://localhost:3000/users', options);
-        await result.json().then((res) => {
-            console.log(res);
-            dispatch(initScenario(res.data.scenario));
-            console.log(currentScenario);
-        })
+      //TODO - temp init of senario mock to be replaced...
+      dispatch(initScenario());
+    //   let result = await fetch("http://localhost:3000/users", options);
+    //   await result.json().then((res) => {
+    //     console.log(res);
+    //      dispatch(initScenario(res.data.scenario));
+    //     console.log(currentScenario);
+    //   });
     } catch (error){
         console.log(error);
     }

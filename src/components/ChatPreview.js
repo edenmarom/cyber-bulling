@@ -8,10 +8,9 @@ import {initScenario} from "../Slices/ScenarioSlice";
 
 export default function ChatPreview() {
     const currentUser = useSelector((state) => state.user.nickname);
-    const currentScenario = useSelector((state) => state.scenario.scenario);
+    const currentScenario = useSelector((state) => state.scenario);
 
 useEffect(()=>{
-    console.log(currentScenario);
     })
     // Check the email and the password.
     // const signIn = async () => {
@@ -57,20 +56,33 @@ useEffect(()=>{
     //     }
     // }
     return (
-        <div>
-            <div id="login1">
-                <div className="login_topimg"></div>
-                <div className="wrap-login100">
-                    <span className="login100-form-title"><b>התחברות</b></span>
-                    <span className="login100-form-subtitle m-b-16"> כינוי:{currentUser}</span>
-                    <span className="login100-form-subtitle m-b-16"> מספר משתתפים:{currentScenario.numberOfUsers}</span>
-                    <div className="container-login100-form-btn p-t-25">
-                        <Link to= {`/rooms/${currentScenario._id}`}>
-                            <button className="login100-form-btn" style={{marginBottom: "20px"}}>המשך</button>
-                        </Link>
-                    </div>
-                </div>
+      <div>
+        <div id="login1">
+          <div className="login_topimg"></div>
+          <div className="wrap-login100">
+            <span className="login100-form-title">
+              <b>התחברות</b>
+            </span>
+            <span className="login100-form-subtitle m-b-16">
+              {" "}
+              כינוי:{currentUser}
+            </span>
+            <span className="login100-form-subtitle m-b-16">
+              {" "}
+              מספר משתתפים:{currentScenario?.numberOfUsers}
+            </span>
+            <div className="container-login100-form-btn p-t-25">
+              <Link to="/chat">
+                <button
+                  className="login100-form-btn"
+                  style={{ marginBottom: "20px" }}
+                >
+                  המשך
+                </button>
+              </Link>
             </div>
+          </div>
         </div>
-    )
+      </div>
+    );
 }
