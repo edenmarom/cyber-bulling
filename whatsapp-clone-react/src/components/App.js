@@ -30,9 +30,9 @@ function App() {
                 </Routes>
             </BrowserRouter>
 
-            {/*<QueryClientProvider client={queryClient}>*/}
-            {/*    <Example/>*/}
-            {/*</QueryClientProvider>*/}
+            {/* <QueryClientProvider client={queryClient}>
+                {    <Example/>}
+            </QueryClientProvider> */}
             {/*</div>*/}
         </div>
     );
