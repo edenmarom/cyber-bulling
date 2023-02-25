@@ -1,6 +1,8 @@
 import {React , useState}  from 'react';
 import { TextField } from '@material-ui/core';
-import '../css/AddScenario.css'
+import '../css/AddScenario.css';
+import http from "../utils/http-communication.ts";
+
 
 export default function AddMessage(props){
 
@@ -24,15 +26,19 @@ export default function AddMessage(props){
         }
         props.scenario.messages.push(message)
         console.log(props.scenario)
-        const options ={
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(props.scenario)
-        }
+        // const options ={
+        //     method: 'PUT',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify(props.scenario)
+        // }
         try{
-            let result = await fetch(`http://localhost:3000/scenarios/${props.scenario._id}`, options);
+                        let result = await http.put(
+                          `/scenarios/${props.scenario._id}`,
+                          JSON.stringify(props.scenario)
+                        );
+            // let result = await fetch(`http://localhost:3000/scenarios/${props.scenario._id}`, options);
             await result.json().then((res) => {
                 console.log(res)
                 props.setData(props.scenario.messages)

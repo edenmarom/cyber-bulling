@@ -2,6 +2,7 @@ import {React, useState, createRef} from 'react';
 //import {useDispatch} from 'react-redux';
 import '../css/SignIn.moudle.css';
 import {Link} from "react-router-dom";
+import http from "../utils/http-communication.ts";
 
 
 export default function AdminLogin() {
@@ -18,7 +19,12 @@ export default function AdminLogin() {
             body: JSON.stringify({password: password})
         }
         try {
-            let result = await fetch('http://localhost:3000/admin', options)
+            // let result = await fetch('http://localhost:3000/admin', options)
+                        let result = await http.post(
+                          "/admin",
+                          JSON.stringify({ password: password })
+                        );
+
             const result2 = await result
             console.log(result2.status)
             if(result2.status===201){
