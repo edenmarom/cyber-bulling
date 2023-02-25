@@ -57,21 +57,21 @@ const scenarioMock = {
   messages: [fakeMsg, fakeMsg2, fakeMsg3, fakeMsg4, fakeMsg5],
 };
 
-export const ScenarioSlice = createSlice({
-    name: 'scenario',
-    initialState,
-    reducers: {
-        initScenario: (state, action) => {
-            // state.id = action.payload;
-            state.id = scenarioMock.id;
-            state.numberOfUsers = scenarioMock.numberOfUsers;
-            state.severity = scenarioMock.severity;
-            state.commentStyle = scenarioMock.commentStyle;
-            state.messages = scenarioMock.messages;
-        },
-    }
-});
-
-export const {initScenario} = ScenarioSlice.actions;
-
-export default ScenarioSlice.reducer;
+// export const ScenarioSlice = createSlice({
+//     name: 'scenario',
+//     initialState,
+//     reducers: {
+//         initScenario: (state, action) => {
+//             // state.id = action.payload;
+//             state.id = scenarioMock.id;
+//             state.numberOfUsers = scenarioMock.numberOfUsers;
+//             state.severity = scenarioMock.severity;
+//             state.commentStyle = scenarioMock.commentStyle;
+//             state.messages = scenarioMock.messages;
+//         },
+//     }
+// });
+//
+// export const {initScenario} = ScenarioSlice.actions;
+//
+// export default ScenarioSlice.reducer;

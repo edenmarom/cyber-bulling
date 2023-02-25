@@ -3,15 +3,20 @@
     padding: 0px;
     box-sizing: border-box;
     font-family: Arial, Helvetica, sans-serif;
+
+}
+.login-background{
+    background-color: #1e293b;
     direction: rtl;
 }
-
 .admin {
     position: absolute;
     right: 20px;
     top: 20px;
 }
-
+.table{
+    background-color: #0a8d48;
+}
 .button-81 {
     background-color: #fff;
     border: 0 solid #e2e8f0;

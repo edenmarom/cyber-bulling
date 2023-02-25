@@ -1,4 +1,4 @@
-import "../css/App.css";
+// import "../css/App.css";
 import React from "react";
 import Sidebar from "../components/Sidebar";
 import Chat from "../components/Chat";
@@ -11,21 +11,31 @@ import {
     QueryClientProvider,
 } from "@tanstack/react-query";
 import SignIn from "./SignIn";
-import Admin from "./Admin";
+import AdminLogin from "./AdminLogin";
 import ChatPreview from "./ChatPreview";
+import AdminPage from "./AdminPage";
+import AdminScenarioManagement from "./AdminScenarioManagement";
+import ScenarioReactions from '../components/ScenariosReactions'
+import Messages from "./Messages";
 
 const queryClient = new QueryClient();
 
 function App() {
     return (
-        <div className="app">
+        <div>
             <BrowserRouter>
                 <Routes>
                     <Route path="/">
                         <Route index element={<SignIn/>}/>
-                        <Route path="admin" element={<Admin/>}/>
+                        <Route path="adminlogin" element={<AdminLogin/>}/>
                         <Route path="chatpreview" element={<ChatPreview/>}/>
                         <Route path="rooms/:roomId" element={<Chat/>}/>
+                        <Route path="adminpage" element={<AdminPage/>}/>
+                        <Route path="scenariomanagement" element={<AdminScenarioManagement/>}/>
+                        <Route path="scenarioReactions">
+                            <Route index element={<ScenarioReactions/>}/>
+                            <Route path=":scenarioId" element={<Messages/>}/>
+                        </Route>
                     </Route>
                 </Routes>
             </BrowserRouter>
