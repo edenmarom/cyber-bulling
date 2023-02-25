@@ -5,11 +5,10 @@ import Sidebar from "./Sidebar";
 import { useSelector } from "react-redux";
 
 function Chat() {
-
   const [input, setInput] = useState("");
   const [participants, setParticipants] = useState([]);
   const [displayedMessages, setDisplayedMessages] = useState([]);
-  const [firstMessageTime, setFirstMessageTime] = useState();
+  const [firstMessageTimestamp] = useState(() => performance.now());
 
   const chatName = "הקבוצה הכי טובה בעולם";
   const delayTimeToSendToServerUserMessages = 5000;
@@ -26,49 +25,48 @@ function Chat() {
     const userMessage = {
       text: input,
       nickname: currentUser.nickname,
-      timeOffset: performance.now() - firstMessageTime,
+      timeOffset: performance.now() - firstMessageTimestamp,
     };
     addMessage(userMessage);
-    setInput('');
+    setInput("");
   };
 
   const renderMessages = () => {
-      if (!firstMessageTime) {
-        setFirstMessageTime(performance.now());
-      }
-      messages.forEach((message) => {
-        setTimeout(() => addMessage(message), message.timeOffset);
-      });
+    messages.forEach((message) => {
+      setTimeout(() => addMessage(message), message.timeOffset);
+    });
   };
 
   const addMessage = (message) => {
-      const displayedMsg = { ...message };
-      displayedMsg.displayTime = new Date().toLocaleTimeString("en-US", {
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12:false,
-      });
-      if (!userColors.has(message.nickname)) {
-        userColors.set(message.nickname, getRandomReadableColor());
-      }
-      displayedMsg.color = userColors.get(message.nickname);
-      setDisplayedMessages((prev) => [...prev, displayedMsg]);
-      requestAnimationFrame(() => {
-        lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
-      });
+    const displayedMsg = { ...message };
+    displayedMsg.displayTime = new Date().toLocaleTimeString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    });
+
+    if (!userColors.has(message.nickname)) {
+      userColors.set(message.nickname, getRandomReadableColor());
+    }
+
+    displayedMsg.color = userColors.get(message.nickname);
+    setDisplayedMessages((prev) => [...prev, displayedMsg]);
+    requestAnimationFrame(() => {
+      lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
+    });
   };
 
   const createParticipantList = () => {
-      const fakeUsersNicknames = messages.map((msg) => msg.nickname);
-      let uniquefakeUsersNicknames = [...new Set(fakeUsersNicknames)];
-      let randomIndex = Math.floor(
-        Math.random() * uniquefakeUsersNicknames.length
-      );
-      uniquefakeUsersNicknames.splice(randomIndex, 0, currentUser.nickname);
-      setParticipants(uniquefakeUsersNicknames);
+    const fakeUsersNicknames = messages.map((msg) => msg.nickname);
+    let uniquefakeUsersNicknames = [...new Set(fakeUsersNicknames)];
+    let randomIndex = Math.floor(
+      Math.random() * uniquefakeUsersNicknames.length
+    );
+    uniquefakeUsersNicknames.splice(randomIndex, 0, currentUser.nickname);
+    setParticipants(uniquefakeUsersNicknames);
   };
 
-  const sendUserMesegesToServer = () =>
+  const sendUserMessagesToServer = () =>
     setTimeout(() => {
       const userMessages = displayedMessagesRef.current.filter(
         (message) => message.nickname === currentUser.nickname
@@ -77,17 +75,17 @@ function Chat() {
       // TODO send to server
     }, messages[messages.length - 1].timeOffset + delayTimeToSendToServerUserMessages);
 
-    const getRandomReadableColor = () => {
-      const red = Math.floor(Math.random() * 256);
-      const green = Math.floor(Math.random() * 256);
-      const blue = Math.floor(Math.random() * 256);
-      return `rgb(${red}, ${green}, ${blue})`;
-    };
+  const getRandomReadableColor = () => {
+    const red = Math.floor(Math.random() * 256);
+    const green = Math.floor(Math.random() * 256);
+    const blue = Math.floor(Math.random() * 256);
+    return `rgb(${red}, ${green}, ${blue})`;
+  };
 
   useEffect(() => {
     createParticipantList();
     renderMessages();
-    sendUserMesegesToServer();
+    sendUserMessagesToServer();
   }, []);
 
   return (
