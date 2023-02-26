@@ -3,6 +3,8 @@ import { Avatar } from "@material-ui/core";
 import "../css/Chat.moudle.css";
 import Sidebar from "./Sidebar";
 import { useSelector } from "react-redux";
+import http from "../utils/http-communication.ts";
+
 
 function Chat() {
   const [input, setInput] = useState("");
@@ -66,13 +68,49 @@ function Chat() {
     setParticipants(uniquefakeUsersNicknames);
   };
 
-  const sendUserMessagesToServer = () =>
-    setTimeout(() => {
+  const sendUserMessagesToServer = async () =>
+    setTimeout(async () => {
       const userMessages = displayedMessagesRef.current.filter(
         (message) => message.nickname === currentUser.nickname
       );
+      const convertedMessages = userMessages.map((msg) => ({
+        text: msg.text,
+        milliseconds_offset: Math.round(msg.timeOffset * 1000),
+      }));
+
       console.log(userMessages);
-      // TODO send to server
+      console.log(convertedMessages);
+      console.log(currentUser.id);
+      console.log(JSON.stringify(convertedMessages));
+      console.log(
+        JSON.stringify({
+          messages: convertedMessages,
+        })
+      );
+
+
+
+      //63bacde1932ce3f7dc9be6db
+
+      try {
+        // let result = await http.put(
+        //   `/users/update-messages/${currentUser.id}`,
+        //   JSON.stringify(convertedMessages)
+        // );
+        let result = await http.put(
+          `/users/update-messages/63bacde1932ce3f7dc9be6db`,
+          JSON.stringify({
+            messages: convertedMessages,
+          })
+        );
+        await result.json().then((res) => {
+          console.log(res);
+        });
+      } catch (err) {
+        console.log(err);
+        console.log("Can't send user messeges to server.");
+      }
+      // // TODO check - 504 why
     }, messages[messages.length - 1]?.timeOffset + delayTimeToSendToServerUserMessages);
 
   const getRandomReadableColor = () => {
