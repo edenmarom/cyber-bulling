@@ -3,8 +3,7 @@ import { Avatar } from "@material-ui/core";
 import "../css/Chat.moudle.css";
 import Sidebar from "./Sidebar";
 import { useSelector } from "react-redux";
-import http from "../utils/http-communication";
-
+import {serverAddr} from "../utils/http-communication";
 
 function Chat() {
   const [input, setInput] = useState("");
@@ -13,6 +12,7 @@ function Chat() {
   const [firstMessageTimestamp] = useState(() => performance.now());
 
   const chatName = "הקבוצה הכי טובה בעולם";
+  const ScenarioEndText = ".הסימולצייה הסתיימה. אנא המשיכו בשאלון";
   const delayTimeToSendToServerUserMessages = 5000;
   const defaultUserDisplayColor = "black";
   const userColors = new Map();
@@ -27,7 +27,7 @@ function Chat() {
     const userMessage = {
       text: input,
       nickname: currentUser.nickname,
-      timeOffset: performance.now() - firstMessageTimestamp,
+      milliseconds_offset: performance.now() - firstMessageTimestamp,
     };
     addMessage(userMessage);
     setInput("");
@@ -35,7 +35,7 @@ function Chat() {
 
   const renderMessages = () => {
     messages.forEach((message) => {
-      setTimeout(() => addMessage(message), message.timeOffset);
+      setTimeout(() => addMessage(message), message.milliseconds_offset);
     });
   };
 
@@ -68,60 +68,50 @@ function Chat() {
     setParticipants(uniquefakeUsersNicknames);
   };
 
-  const sendUserMessagesToServer = async () =>
+  const formatUserMessages = (displayedMessagesRef, currentUser) => {
+     const userMessages = displayedMessagesRef.current.filter(
+       (message) => message.nickname === currentUser.nickname
+     );
+     const convertedMessages = userMessages.map((msg) => ({
+       text: msg.text,
+       milliseconds_offset: Math.round(msg.milliseconds_offset * 1000),
+     }));
+     return convertedMessages;
+  };
+
+  const sendUserMessagesToServer = () => {
+    const scenarioEndTime =
+      +messages[messages.length - 1].milliseconds_offset +
+      +delayTimeToSendToServerUserMessages;
     setTimeout(async () => {
-      const userMessages = displayedMessagesRef.current.filter(
-        (message) => message.nickname === currentUser.nickname
+      const convertedMessages = formatUserMessages(
+        displayedMessagesRef,
+        currentUser
       );
-      const convertedMessages = userMessages.map((msg) => ({
-        text: msg.text,
-        milliseconds_offset: Math.round(msg.timeOffset * 1000),
-      }));
-      console.log(
-        JSON.stringify({
+      const options = {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
           messages: convertedMessages,
-        })
-      );
+        }),
+      };
 
       try {
-        // let result = await http.put(
-        //   `/users/update-messages/${currentUser.id}`,
-        //   JSON.stringify(convertedMessages)
-        // );
-        let result = await http.put(
-          `/users/update-messages/63bacde1932ce3f7dc9be6db`,
-          JSON.stringify({
-            messages: convertedMessages,
-          })
+        let result = await fetch(
+          serverAddr + `/users/update-messages/${currentUser.id}`,
+          options
         );
         result.json().then((res) => {
           console.log(res);
         });
-      } catch (err) {
-        console.log(err);
+      } catch {
         console.log("Can't send user messeges to server.");
       }
-      // TODO check - 504 why
-
-    //   const options = {
-    //     method: 'PUT',
-    //     headers: {
-    //         'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify({
-    //       messages: convertedMessages,
-    //     })
-    // }
-    // try {
-    //     let result = await fetch(`https://cyber-bullying-server.onrender.com/users/update-messages/63bacde1932ce3f7dc9be6db`, options);
-    //     result.json().then((res) => {
-    //         console.log(res)
-    //     })
-    // } catch {
-    //   console.log("Can't send user messeges to server.");
-    // }
-
-    }, messages[messages.length - 1]?.timeOffset + delayTimeToSendToServerUserMessages);
+      alert(ScenarioEndText);
+    }, scenarioEndTime);
+  };
 
   const getRandomReadableColor = () => {
     const red = Math.floor(Math.random() * 256);

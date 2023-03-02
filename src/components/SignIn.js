@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from 'react-redux';
 // } from "react-validations-components";
 import '../css/SignIn.moudle.css';
 import {Link} from "react-router-dom";
-import {initUser} from "../Slices/UserSlice";
+import {initUser, updateUserID} from "../Slices/UserSlice";
 import {initScenario} from "../Slices/ScenarioSlice";
 import { serverAddr } from '../utils/http-communication';
 
@@ -30,9 +30,8 @@ export default function SignIn() {
     try {
       let result = await fetch(serverAddr + "/users", options);
       await result.json().then((res) => {
-        console.log(res);
+         dispatch(updateUserID(res.data.user._id));
          dispatch(initScenario(res.data.scenario));
-        console.log(currentScenario);
       });
     } catch (error){
         console.log(error);
