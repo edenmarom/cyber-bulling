@@ -8,6 +8,7 @@ import '../css/SignIn.moudle.css';
 import {Link} from "react-router-dom";
 import {initUser} from "../Slices/UserSlice";
 import {initScenario} from "../Slices/ScenarioSlice";
+import { serverAddr } from '../utils/http-communication';
 
 
 export default function SignIn() {
@@ -27,14 +28,12 @@ export default function SignIn() {
         body: JSON.stringify({nickname: currentUser})
     }
     try {
-      //TODO - temp init of senario mock to be replaced...
-      dispatch(initScenario());
-    //   let result = await fetch("http://localhost:3000/users", options);
-    //   await result.json().then((res) => {
-    //     console.log(res);
-    //      dispatch(initScenario(res.data.scenario));
-    //     console.log(currentScenario);
-    //   });
+      let result = await fetch(serverAddr + "/users", options);
+      await result.json().then((res) => {
+        console.log(res);
+         dispatch(initScenario(res.data.scenario));
+        console.log(currentScenario);
+      });
     } catch (error){
         console.log(error);
     }

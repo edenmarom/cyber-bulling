@@ -3,7 +3,6 @@ import {React, useState, createRef, useEffect} from 'react';
 import '../css/SignIn.moudle.css';
 import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
-import {initScenario} from "../Slices/ScenarioSlice";
 
 
 export default function ChatPreview() {

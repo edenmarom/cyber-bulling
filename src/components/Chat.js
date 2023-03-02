@@ -3,7 +3,7 @@ import { Avatar } from "@material-ui/core";
 import "../css/Chat.moudle.css";
 import Sidebar from "./Sidebar";
 import { useSelector } from "react-redux";
-import http from "../utils/http-communication.ts";
+import http from "../utils/http-communication";
 
 
 function Chat() {
@@ -17,7 +17,7 @@ function Chat() {
   const defaultUserDisplayColor = "black";
   const userColors = new Map();
   const currentUser = useSelector((state) => state.user);
-  const messages = useSelector((state) => state.scenario.messages);
+  const messages = useSelector((state) => state.scenario.scenario.messages);
   const displayedMessagesRef = useRef(displayedMessages);
   displayedMessagesRef.current = displayedMessages;
   const lastMessageRef = useRef(null);
@@ -77,20 +77,11 @@ function Chat() {
         text: msg.text,
         milliseconds_offset: Math.round(msg.timeOffset * 1000),
       }));
-
-      console.log(userMessages);
-      console.log(convertedMessages);
-      console.log(currentUser.id);
-      console.log(JSON.stringify(convertedMessages));
       console.log(
         JSON.stringify({
           messages: convertedMessages,
         })
       );
-
-
-
-      //63bacde1932ce3f7dc9be6db
 
       try {
         // let result = await http.put(
@@ -103,14 +94,33 @@ function Chat() {
             messages: convertedMessages,
           })
         );
-        await result.json().then((res) => {
+        result.json().then((res) => {
           console.log(res);
         });
       } catch (err) {
         console.log(err);
         console.log("Can't send user messeges to server.");
       }
-      // // TODO check - 504 why
+      // TODO check - 504 why
+
+    //   const options = {
+    //     method: 'PUT',
+    //     headers: {
+    //         'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify({
+    //       messages: convertedMessages,
+    //     })
+    // }
+    // try {
+    //     let result = await fetch(`https://cyber-bullying-server.onrender.com/users/update-messages/63bacde1932ce3f7dc9be6db`, options);
+    //     result.json().then((res) => {
+    //         console.log(res)
+    //     })
+    // } catch {
+    //   console.log("Can't send user messeges to server.");
+    // }
+
     }, messages[messages.length - 1]?.timeOffset + delayTimeToSendToServerUserMessages);
 
   const getRandomReadableColor = () => {
