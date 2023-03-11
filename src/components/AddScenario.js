@@ -6,6 +6,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import {serverAddr} from "../utils/http-communication"
 
 
 export default function AddScenario(props) {
@@ -54,7 +55,7 @@ export default function AddScenario(props) {
             body: JSON.stringify(scenario)
         }
         try {
-            let result = await fetch('http://localhost:3000/scenarios', options);
+            let result = await fetch(serverAddr + '/scenarios', options);
             await result.json().then((res) => {
                 console.log(res)
                 props.setScenarios([...props.scenario, res.data])

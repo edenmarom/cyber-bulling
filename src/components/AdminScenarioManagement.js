@@ -1,6 +1,6 @@
 import {React, useEffect, useState} from 'react';
 import {NavLink, useParams} from 'react-router-dom';
-import { DataGrid } from "@mui/x-data-grid";
+import {DataGrid} from "@mui/x-data-grid";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import SaveIcon from '@mui/icons-material/Save';
@@ -16,15 +16,16 @@ import ScenarioDetails from "./ScenarioDetails";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import AddScenario from './AddScenario';
 import Box from '@mui/material/Box';
+import {serverAddr} from "../utils/http-communication";
 
 
 export default function AdminScenarioManagement() {
     const [scenario, setScenarios] = useState([]);
     const [selectedSenario, setSelectedScenario] = useState(null)
-    const [add , setAdd] = useState(false);
+    const [add, setAdd] = useState(false);
 
     const getScenarios = () => {
-        fetch("http://localhost:3000/scenarios")
+        fetch(serverAddr + "/scenarios")
             .then((res) => res.json())
             .then((response) => setScenarios(response.data))
     }
@@ -60,7 +61,7 @@ export default function AdminScenarioManagement() {
             },
         };
         try {
-            let result = await fetch(`http://localhost:3000/scenarios/${id}`, options);
+            let result = await fetch(serverAddr + `/scenarios/${id}`, options);
             await result.json().then(() => {
                 getScenarios();//TODO CHENA - check its refresh
             })
@@ -90,9 +91,9 @@ export default function AdminScenarioManagement() {
             body: JSON.stringify(scenario)
         }
         try {
-            let result = await fetch(`http://localhost:3000/scenarios/${scenario._id}`, options);
+            let result = await fetch(serverAddr + `/scenarios/${scenario._id}`, options);
             result.json().then((res) => {
-                alert(res)
+                console.log(res)
             })
         } catch {
             alert("Can't update scenario")
@@ -128,15 +129,15 @@ export default function AdminScenarioManagement() {
 
                 if (isInEditMode) {
                     return [
-                        <div style={{textAlign:"center"}}>
+                        <div style={{textAlign: "center"}}>
                             <GridActionsCellItem
                                 icon={<SaveIcon/>}
                                 label="Save"
                                 onClick={handleSaveClick(id)}
                             />
-                            <p style={{marginBotton:"0px"}}>save</p>
-                        </div> ,
-                        <div style={{textAlign:"center"}}>
+                            <p style={{marginBotton: "0px"}}>save</p>
+                        </div>,
+                        <div style={{textAlign: "center"}}>
                             <GridActionsCellItem
                                 icon={<CancelIcon/>}
                                 label="Cancel"
@@ -144,22 +145,22 @@ export default function AdminScenarioManagement() {
                                 onClick={handleCancelClick(id)}
                                 color="inherit"
                             />
-                            <p style={{marginBotton:"0px"}}>cancel</p>
+                            <p style={{marginBotton: "0px"}}>cancel</p>
                         </div>
                     ];
                 }
 
                 return [
-                    <div style={{textAlign:"center"}}>
+                    <div style={{textAlign: "center"}}>
                         <GridActionsCellItem
                             icon={<DeleteIcon/>}
                             label="Delete"
                             onClick={handleDeleteClick(id)}
                             color="inherit"
                         />
-                        <p style={{marginBotton:"0px"}}>delete</p>
-                    </div>  ,
-                    <div style={{textAlign:"center"}}>
+                        <p style={{marginBotton: "0px"}}>delete</p>
+                    </div>,
+                    <div style={{textAlign: "center"}}>
                         <GridActionsCellItem
                             icon={<EditIcon/>}
                             label="Edit"
@@ -167,7 +168,7 @@ export default function AdminScenarioManagement() {
                             onClick={handleEditClick(id)}
                             color="inherit"
                         />
-                        <p style={{marginBotton:"0px"}}>edit</p>
+                        <p style={{marginBotton: "0px"}}>edit</p>
                     </div>
                 ];
             },
@@ -175,18 +176,19 @@ export default function AdminScenarioManagement() {
     ];
 
     function onScenarioClick(event) {
-        if(selectedSenario){
-            if(selectedSenario._id === event.row._id) {
+        if (selectedSenario) {
+            if (selectedSenario._id === event.row._id) {
                 setSelectedScenario(null)
             } else {
                 setSelectedScenario(event.row)
-            }}else {
+            }
+        } else {
             setSelectedScenario(event.row)
         }
         setAdd(false)
     }
 
-    function addScenario(){
+    function addScenario() {
         setAdd(true)
     }
 
@@ -194,12 +196,12 @@ export default function AdminScenarioManagement() {
         <div className="background">
             <h2 id="scenarioTitle">Scenario Management</h2>
             <div className='element'>
-                <div className="tableScenario" >
+                <div className="tableScenario">
                     <div className='titleDiv'>
                         <AddCircleOutlineIcon onClick={addScenario}/>
                         <h2 id="scenarioMiniTitle">all scenarios</h2>
                     </div>
-                    <Box sx={{ height: '90%', width: '100%'}}>
+                    <Box sx={{height: '90%', width: '100%'}}>
                         <DataGrid
                             editMode="row"
                             rows={scenario}
@@ -222,7 +224,8 @@ export default function AdminScenarioManagement() {
                     </Box>
                 </div>
             </div>
-            {selectedSenario ? <ScenarioDetails scenario={selectedSenario} setSelectedScenario={setSelectedScenario}/> : <></>}
+            {selectedSenario ?
+                <ScenarioDetails scenario={selectedSenario} setSelectedScenario={setSelectedScenario}/> : <></>}
             {add ? <AddScenario setAdd={setAdd}/> : <></>}
             <AdminSideBar/>
         </div>

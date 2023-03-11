@@ -1,9 +1,10 @@
-import { React, useEffect, useState } from "react";
-import { DataGrid } from "@mui/x-data-grid";
+import {React, useEffect, useState} from "react";
+import {DataGrid} from "@mui/x-data-grid";
 import "../css/Messages.css";
-import { useParams } from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 import Box from '@mui/material/Box';
 import AdminSideBar from './AdminSideBar';
+import {serverAddr} from "../utils/http-communication";
 
 
 function Messages() {
@@ -12,7 +13,7 @@ function Messages() {
     const [participants, setParticipats] = useState([])
 
     const getScenario = () => {
-        fetch(`http://localhost:3000/scenario-reactions/${scenarioId.scenarioId}`)
+        fetch(serverAddr + `/scenario-reactions/${scenarioId.scenarioId}`)
             .then((res) => res.json())
             .then((response) => {
                 setMessages(response.data.scenario.messages)
@@ -52,20 +53,25 @@ function Messages() {
         if (value >= 60) {
             if (String(value % 60).length == 1) {
                 return Math.floor(value / 60) + ":0" + value % 60
-            }
-            else return Math.floor(value / 60) + ":" + value % 60
+            } else return Math.floor(value / 60) + ":" + value % 60
         } else if (String(value).length == 1) {
             return "0:0" + value
-        }
-        else {
+        } else {
             return "0:" + value
         }
     }
 
     const columns = [
-        { field: "nickname", headerName: "User", width: 300, editable: true, type: 'string' },
-        { field: "text", headerName: "Message", width: 300, editable: true, type: 'string' },
-        { field: "milliseconds_offset", headerName: "Offset", width: 200, editable: true, type: 'string', valueGetter: ({ value }) => changeOffset(value) }
+        {field: "nickname", headerName: "User", width: 300, editable: true, type: 'string'},
+        {field: "text", headerName: "Message", width: 300, editable: true, type: 'string'},
+        {
+            field: "milliseconds_offset",
+            headerName: "Offset",
+            width: 200,
+            editable: true,
+            type: 'string',
+            valueGetter: ({value}) => changeOffset(value)
+        }
     ];
 
     useEffect(() => {
@@ -98,13 +104,13 @@ function Messages() {
         }
         array = array.sort((a, b) => a.milliseconds_offset - b.milliseconds_offset)
         return (
-            <Box sx={{ height: '90%', width: '100%', marginBottom: "20px" }} key={index}>
+            <Box sx={{height: '90%', width: '100%', marginBottom: "20px"}} key={index}>
                 <DataGrid
                     editMode="row"
                     rows={array}
                     getRowId={(row) => row.key}
                     columns={columns}
-                    experimentalFeatures={{ newEditingApi: true }}
+                    experimentalFeatures={{newEditingApi: true}}
                     getRowHeight={() => 'auto'}
                     autoHeight={true}
                     getRowClassName={(params) => {
@@ -119,7 +125,7 @@ function Messages() {
         <div className="background">
             <h2 id="scenarioTitle">Scenario Reactions</h2>
             <div className='element3'>
-                <div className="tableScenario" style={{ padding: "20px" }}>
+                <div className="tableScenario" style={{padding: "20px"}}>
                     <div className='titleDiv'>
                         <p></p>
                         <h2 id="scenarioMiniTitle">Scenario result</h2>
@@ -140,8 +146,9 @@ function Messages() {
                     </Box> */}
                 </div>
             </div>
-            <AdminSideBar />
+            <AdminSideBar/>
         </div>
     );
 }
+
 export default Messages;

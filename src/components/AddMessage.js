@@ -18,7 +18,7 @@ export default function AddMessage(props){
     const save = async () => {
         for(let key in message){
             if(key !== "messages"){
-                if(message[key] == "") {
+                if(message[key] === "") {
                     alert("You need to fill all the inputs");
                     return;
                 }
@@ -38,7 +38,6 @@ export default function AddMessage(props){
                           `/scenarios/${props.scenario._id}`,
                           JSON.stringify(props.scenario)
                         );
-            // let result = await fetch(`http://localhost:3000/scenarios/${props.scenario._id}`, options);
             await result.json().then((res) => {
                 console.log(res)
                 props.setData(props.scenario.messages)

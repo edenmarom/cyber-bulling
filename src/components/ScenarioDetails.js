@@ -8,12 +8,13 @@ import CancelIcon from "@mui/icons-material/Close";
 import "../css/ScenarioDetails.css";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import AddMessage from './AddMessage';
+import {serverAddr} from "../utils/http-communication";
 
 
-function ScenarioDetails(props){
+function ScenarioDetails(props) {
     // console.log(props.scenario)
-    const [data,setData] = useState([])
-    const [add , setAdd] = useState(false);
+    const [data, setData] = useState([])
+    const [add, setAdd] = useState(false);
 
     const [rowModesModel, setRowModesModel] = useState({});
 
@@ -35,7 +36,7 @@ function ScenarioDetails(props){
 
     const handleDeleteClick = (id) => async () => {
         console.log(id)
-        props.scenario.messages.splice(id,1);
+        props.scenario.messages.splice(id, 1);
         console.log(props.scenario)
         call(props.scenario)
     };
@@ -61,7 +62,7 @@ function ScenarioDetails(props){
             body: JSON.stringify(scenario)
         }
         try {
-            let result = await fetch(`http://localhost:3000/scenarios/${scenario._id}`, options);
+            let result = await fetch(serverAddr + `/scenarios/${scenario._id}`, options);
             result.json().then((res) => {
                 console.log(res)
             })
@@ -79,29 +80,34 @@ function ScenarioDetails(props){
         return updatedRow;
     };
 
-    function changeOffset(value){
-        if(value >=60){
-            if(String(value%60).length == 1){
-                return Math.floor(value/60) + ":0" + value%60
-            }
-            else return Math.floor(value/60) + ":" + value%60
-        } else if(String(value).length == 1){
+    function changeOffset(value) {
+        if (value >= 60) {
+            if (String(value % 60).length == 1) {
+                return Math.floor(value / 60) + ":0" + value % 60
+            } else return Math.floor(value / 60) + ":" + value % 60
+        } else if (String(value).length == 1) {
             return "0:0" + value
-        }
-        else {
+        } else {
             return "0:" + value
         }
     }
 
     const columns = [
-        {field: "nickname", headerName: "User", width:200, editable: true, type: 'string'},
+        {field: "nickname", headerName: "User", width: 200, editable: true, type: 'string'},
         {field: "text", headerName: "Message", width: 200, editable: true, type: 'string'},
         // { field: "CreationDate", headerName: "Creation Date", width: 200 , editable: true , type:'number'},//TODO CHENA waiting for
-        {field: "milliseconds_offset", headerName: "Offset", width: 100, editable: true, type: 'string' ,  valueGetter: ({ value }) => changeOffset(value)},
+        {
+            field: "milliseconds_offset",
+            headerName: "Offset",
+            width: 100,
+            editable: true,
+            type: 'string',
+            valueGetter: ({value}) => changeOffset(value)
+        },
         {
             field: 'actions',
             type: 'actions',
-            headerName: <AddCircleOutlineIcon onClick={()=>setAdd(true)}/>,
+            headerName: <AddCircleOutlineIcon onClick={() => setAdd(true)}/>,
             width: 200,
             cellClassName: 'actions',
             getActions: ({id}) => {
@@ -109,15 +115,15 @@ function ScenarioDetails(props){
 
                 if (isInEditMode) {
                     return [
-                        <div style={{textAlign:"center"}}>
+                        <div style={{textAlign: "center"}}>
                             <GridActionsCellItem
                                 icon={<SaveIcon/>}
                                 label="Save"
                                 onClick={handleSaveClick(id)}
                             />
-                            <p style={{marginBotton:"0px"}}>save</p>
-                        </div> ,
-                        <div style={{textAlign:"center"}}>
+                            <p style={{marginBotton: "0px"}}>save</p>
+                        </div>,
+                        <div style={{textAlign: "center"}}>
                             <GridActionsCellItem
                                 icon={<CancelIcon/>}
                                 label="Cancel"
@@ -125,13 +131,13 @@ function ScenarioDetails(props){
                                 onClick={handleCancelClick(id)}
                                 color="inherit"
                             />
-                            <p style={{marginBotton:"0px"}}>cancel</p>
+                            <p style={{marginBotton: "0px"}}>cancel</p>
                         </div>
                     ];
                 }
 
                 return [
-                    <div style={{textAlign:"center"}}>
+                    <div style={{textAlign: "center"}}>
                         <GridActionsCellItem
                             icon={<DeleteIcon/>}
                             label="Delete"
@@ -139,8 +145,8 @@ function ScenarioDetails(props){
                             color="inherit"
                         />
                         {/* <p style={{marginBotton:"0px"}}>delete</p>  */}
-                    </div>  ,
-                    <div style={{textAlign:"center"}}>
+                    </div>,
+                    <div style={{textAlign: "center"}}>
                         <GridActionsCellItem
                             icon={<EditIcon/>}
                             label="Edit"
@@ -155,31 +161,31 @@ function ScenarioDetails(props){
         }
     ];
 
-    useEffect(()=>{
+    useEffect(() => {
         let array = []
-        let sorted = props.scenario.messages.sort((a,b)=>a.milliseconds_offset - b.milliseconds_offset)
-        for (let i=0;i<sorted.length;i++){
+        let sorted = props.scenario.messages.sort((a, b) => a.milliseconds_offset - b.milliseconds_offset)
+        for (let i = 0; i < sorted.length; i++) {
             let message = sorted[i]
             array.push({
                 nickname: message.nickname,
                 text: message.text,
-                milliseconds_offset:message.milliseconds_offset,
+                milliseconds_offset: message.milliseconds_offset,
                 key: i
             })
         }
         console.log(array)
         setData(array)
-    },[])
+    }, [])
 
-    function close(e){
-        if(e.target.className == "popup"){
+    function close(e) {
+        if (e.target.className == "popup") {
             props.setSelectedScenario(null);
         }
     }
 
-    return(
+    return (
         <div>
-            <div className="popup" onClick={(e)=>close(e)}>
+            <div className="popup" onClick={(e) => close(e)}>
                 <div className='element2'>
                     <div className="table1">
                         <DataGrid
@@ -200,4 +206,5 @@ function ScenarioDetails(props){
         </div>
     );
 }
+
 export default ScenarioDetails;
