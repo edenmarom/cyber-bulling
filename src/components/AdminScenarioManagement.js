@@ -117,7 +117,7 @@ export default function AdminScenarioManagement() {
         {field: "numberOfUsers", headerName: "Num Of Users", width: 120, editable: true, type: 'number'},
         {field: "commentType", headerName: "commentType", width: 150, editable: true, type: 'text'},
         // { field: "CreationDate", headerName: "Creation Date", width: 120 , editable: true , type:'number'},//TODO CHENA waiting for Peleg
-        {field: "severity", headerName: "Severity", width: 120, editable: true, type: 'string'},
+        {field: "severity", headerName: "Severity", width: 130, editable: true, type: 'string'},
         {
             field: 'actions',
             type: 'actions',
@@ -199,7 +199,7 @@ export default function AdminScenarioManagement() {
                 <div className="tableScenario">
                     <div className='titleDiv'>
                         <AddCircleOutlineIcon onClick={addScenario}/>
-                        <h2 id="scenarioMiniTitle">all scenarios</h2>
+                        <h2 id="scenarioMiniTitle">All scenarios</h2>
                     </div>
                     <Box sx={{height: '90%', width: '100%'}}>
                         <DataGrid

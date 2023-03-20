@@ -1,4 +1,4 @@
-.background{
+.background {
     background-color: #E5E5E5;
     width: 100%;
     height: 100%;
@@ -8,29 +8,29 @@
     top: 0;
 }
 
-.element{
+.element {
     align-content: center;
     position: fixed;
-    left:calc(50% - 450px + 120px);
-    background: #FFFFFF!important;
+    left: calc(50% - 450px + 120px);
+    background: #FFFFFF !important;
     height: 80%;
     width: 900px;
-    margin-top:20px;
+    margin-top: 20px;
 }
-.element .table{
+
+.element .table {
     direction: ltr;
     background-color: #ffffff;
     align-content: center;
     text-align: center;
 }
 
-.element .tableScenario{
+.element .tableScenario {
     height: 100%;
 }
 
-#scenarioTitle{
+#scenarioTitle {
     margin-right: calc(50% - 80px);
-    font-family: 'Mulish';
     font-style: normal;
     font-weight: 700;
     font-size: 24px;
@@ -38,13 +38,12 @@
     letter-spacing: 0.3px;
 }
 
-.element #scenarioMiniTitle{
-    font-family: 'Muli';
+.element #scenarioMiniTitle {
     font-size: 19px;
 }
 
-.element .titleDiv{
-    display:flex;
+.element .titleDiv {
+    display: flex;
     flex-direction: row-reverse;
     justify-content: space-between;
     align-items: center;
@@ -52,11 +51,11 @@
     margin: 0px 30px;
 }
 
-.element .MuiTablePagination-selectLabel{
-    display: none!important;
+.element .MuiTablePagination-selectLabel {
+    display: none !important;
 }
 
-.element .css-levciy-MuiTablePagination-displayedRows{
+.element .css-levciy-MuiTablePagination-displayedRows {
     margin-bottom: 0;
 }
 
@@ -64,30 +63,28 @@
     direction: rtl;
 }
 
-.element .MuiDataGrid-row  {
+.element .MuiDataGrid-row {
     border-bottom: 1px solid rgb(219, 219, 219);
     align-items: center;
-    min-height: 60px!important;
+    min-height: 60px !important;
 }
 
 .element .MuiDataGrid-cell {
-    border-bottom: 0px!important;
-    margin:5px 2px;
+    border-bottom: 0px !important;
+    margin: 5px 2px;
 }
 
-.element .MuiDataGrid-cellContent{
-    font-family: 'Mulish';
+.element .MuiDataGrid-cellContent {
     font-style: normal;
     font-weight: 600;
     font-size: 14px;
 }
 
-.element p{
-    margin-bottom: 0px!important;
+.element p {
+    margin-bottom: 0px !important;
 }
 
-.element .css-1jbbcbn-MuiDataGrid-columnHeaderTitle{
-    font-family: 'Mulish';
+.element .css-1jbbcbn-MuiDataGrid-columnHeaderTitle {
     font-style: normal;
     font-weight: 700;
     font-size: 14px;
@@ -95,36 +92,34 @@
     color: #9FA2B4;
 }
 
-.bad{
+.bad {
     /* background-color: red;
     border: 1px solid black;
     border-radius: 30px; */
     background: #F12B2C;
     border-radius: 100px;
-    padding: 0px 45px!important;
-    min-width: 70px!important;
-    max-height: 30px!important;
+    padding: 0px 45px !important;
+    min-width: 70px !important;
+    max-height: 30px !important;
     height: 30px;
     margin: auto;
-    color:white;
-    font-family: 'Muli';
+    color: white;
     font-size: 11px;
     line-height: 13px;
     text-transform: uppercase;
 }
 
-.good{
+.good {
     background: #29CC97;
     width: 150px;
     border-radius: 100px;
-    padding: 0px 38px!important;
-    min-width: 70px!important;
-    min-height: 30px!important;
+    padding: 0px 38px !important;
+    min-width: 70px !important;
+    min-height: 30px !important;
     height: 30px;
     margin: auto;
-    color:white;
-    font-family: 'Muli';
-    font-size:11px;
+    color: white;
+    font-size: 11px;
     line-height: 13px;
     text-transform: uppercase;
 }
@@ -133,12 +128,12 @@
     background: #ffffff;
 }
 
-.element .MuiDataGrid-actionsCell{
+.element .MuiDataGrid-actionsCell {
     width: 100%;
     justify-content: space-around;
-    color:#8E8E93;
+    color: #8E8E93;
 }
 
-.element .MuiDataGrid-iconSeparator{
-    display: none!important;
+.element .MuiDataGrid-iconSeparator {
+    display: none !important;
 }

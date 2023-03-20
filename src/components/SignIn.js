@@ -19,7 +19,17 @@ export default function SignIn() {
 
     const signIn = async () => {
         console.log(currentUser);
+        if(currentUser.length !== 0 && (currentUser.length > 15 || currentUser.length < 6) && (/^[a-zA-Z0-9]*$/.test(currentUser) || /^[a-zA-Z]*$/.test(currentUser))){
+            document.getElementById("error").style.display = "block";
+            return;
+        } else if(currentUser.length <= 15 && currentUser.length >= 6 ){
+            document.getElementById("error").style.display = "none";
+        }
+        else {
+            document.getElementById("error").style.display = "none";
 
+        }
+    console.log(/^[a-zA-Z]*$/.test(currentUser))
     const options = {
         method: 'POST',
         headers: {
@@ -32,6 +42,7 @@ export default function SignIn() {
       await result.json().then((res) => {
          dispatch(updateUserID(res.data.user._id));
          dispatch(initScenario(res.data.scenario));
+         window.location.href = "/chatpreview"
       });
     } catch (error){
         console.log(error);
@@ -53,10 +64,17 @@ export default function SignIn() {
                     <span className="login100-form-subtitle m-b-16"> * אל תשתמש בשם האמיתי שלך</span>
                     <div className="wrap-input100 validate-input m-b-16">
                         <input className="input100" type="text" placeholder="כינוי"
+                               onKeyPress={(e)=>{
+                                   if(e.key == "Enter"){
+                                       e.preventDefault();
+                                       signIn();
+                                   }
+                               }}
                                maxLength="15" minLength="6"
                                onChange={(e) => {//TODO CHENA change to onSubmit
                                    dispatch(initUser(e.target.value));
                                }
+
                                }/>
                         <span className="focus-input100"></span>
                         <span className="symbol-input100">
@@ -64,16 +82,13 @@ export default function SignIn() {
                     </span>
                     </div>
                     <div className="container-login100-form-btn p-t-25">
-                        {currentUser.length !== 0 && (currentUser.length > 15 || currentUser.length < 6) ?
-                            <div>
+
+                            <div style={{textAlign:"center" , color:"red" , display:"none"}} id="error">
                                 <p>הכינוי לא עומד בתנאים - חייב להיות בין 6-15 תווים</p>
-                            </div> : <></>
-                        }
-                        {currentUser.length <= 15 && currentUser.length >= 6 ?
-                            <Link to="chatpreview">
+                            </div>
+
                                 <button className="login100-form-btn" onClick={()=>signIn()} style={{marginBottom: "20px"}}>המשך</button>
-                            </Link> : <button className="login100-form-btn" style={{marginBottom: "20px"}}>המשך</button>
-                        }
+
                     </div>
                 </div>
             </div>

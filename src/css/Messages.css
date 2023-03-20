@@ -31,7 +31,6 @@
 
 #scenarioTitle{
     margin-right: calc(50% - 80px);
-    font-family: 'Mulish';
     font-style: normal;
     font-weight: 700;
     font-size: 24px;
@@ -40,7 +39,6 @@
 }
 
 .element3 #scenarioMiniTitle{
-    font-family: 'Muli';
     font-size: 19px;
 }
 
@@ -77,7 +75,6 @@
 }
 
 .element3 .MuiDataGrid-cellContent{
-    font-family: 'Roboto';
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
@@ -91,7 +88,6 @@
 }
 
 .element3 .css-1jbbcbn-MuiDataGrid-columnHeaderTitle{
-    font-family: 'Roboto';
     font-style: normal;
     font-weight: 500;
     font-size: 18px;

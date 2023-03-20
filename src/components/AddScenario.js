@@ -33,14 +33,14 @@ export default function AddScenario(props) {
         message.milliseconds_offset = Number(message.milliseconds_offset)
         for (let key in scenario) {
             if (key !== "messages") {
-                if (scenario[key] == "") {
+                if (scenario[key] === "") {
                     alert("You need to fill all the inputs");
                     return;
                 }
             }
         }
         for (let key in message) {
-            if (message[key] == "") {
+            if (message[key] === "") {
                 alert("You need to fill all the inputs");
                 return;
             }
@@ -68,7 +68,7 @@ export default function AddScenario(props) {
     }
 
     function close(e) {
-        if (e.target.className == "popup") {
+        if (e.target.className === "popup") {
             props.setAdd(false);
         }
     }
