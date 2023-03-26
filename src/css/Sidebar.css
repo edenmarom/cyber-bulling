@@ -2,6 +2,12 @@
     flex: 0.35;
 }
 
+.participantsList{
+    overflow-y: auto;
+    direction: ltr;
+    max-height: 500px;
+}
+
 .sidebar_search{
     display: flex;
     align-items: center;

@@ -12,7 +12,7 @@ function Chat() {
   const [firstMessageTimestamp] = useState(() => performance.now());
 
   const chatName = "הקבוצה הכי טובה בעולם";
-  const ScenarioEndText = "חדר הצ'אט הסתיים. מיד תועבר/י להמשך הפעילות";
+  const ScenarioEndText = "חדר הצ'אט הסתיים. אנא חזור לשאלון";
   const delayTimeToSendToServerUserMessages = 5000;
   const defaultUserDisplayColor = "black";
   const userColors = new Map();

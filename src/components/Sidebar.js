@@ -25,12 +25,14 @@ function Sidebar({ participants }) {
         </div>
       </div>
       <div className="sidebar_chats">
-        <h2>משתתפי הקבוצה:</h2>
-        {participants.map((user, index) => (
-          <div key={index}>
-            <SidebarChat name={user} />
-          </div>
-        ))}
+        <h2>משתתפי הקבוצה ({participants.length}):</h2>
+        <div className="participantsList">
+          {participants.map((user, index) => (
+            <div key={index}>
+              <SidebarChat name={user} />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -16,6 +16,11 @@
 
 .chat-room-last-seen{
     margin: 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-height: 22px;
+    white-space: nowrap;
+    width: 500px;
 }
 
 .chat_header{

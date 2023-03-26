@@ -16,16 +16,19 @@ export default function ChatPreview() {
         <div id="login1">
           <div className="login_topimg"></div>
           <div className="wrap-login100">
-            <span className="login100-form-title">
+            <span className="login100-form-title" style={{ fontSize: "40px" }}>
               <b>התחברות</b>
-            </span>
-            <span className="login100-form-subtitle m-b-16">
-              {" "}
-              {currentUser} :כינוי
             </span>
             <span
               className="login100-form-subtitle m-b-16"
-              style={{ fontWeight: "bold" }}
+              style={{ fontSize: "30px" }}
+            >
+              {" "}
+              {currentUser}
+            </span>
+            <span
+              className="login100-form-subtitle m-b-16"
+              style={{ fontWeight: "bold", fontSize: "30px" }}
             >
               {" "}
               מספר משתתפים: {currentScenario?.scenario.numberOfUsers}
