@@ -2,7 +2,8 @@ import {React, useEffect, useState} from 'react';
 import {NavLink, useParams} from 'react-router-dom';
 import {DataGrid} from "@mui/x-data-grid";
 import AdminSideBar from './AdminSideBar';
-import "../css/AdminScenarioManagement.css"
+import "../css/AdminScenarioManagement.css";
+import {Link} from "react-router-dom";
 import "./ScenarioDetails"
 import {
     GridRowModes,
@@ -54,6 +55,9 @@ export default function ScenarioReactions() {
 
     return (
         <div className="background">
+            <Link to="/adminlogin">
+                <button className="button-81">Logout</button>
+            </Link>
             <h2 id="scenarioTitle">Scenario Reactions</h2>
             <div className='element' style={{width: "750px"}}>
                 <div className="tableScenario">

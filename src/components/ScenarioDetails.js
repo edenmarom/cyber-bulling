@@ -27,6 +27,8 @@ function ScenarioDetails(props) {
     };
 
     const handleEditClick = (id) => () => {
+        console.log(id)
+        console.log(props.scenario.messages[0])
         setRowModesModel({...rowModesModel, [id]: {mode: GridRowModes.Edit}});
     };
 
@@ -38,6 +40,7 @@ function ScenarioDetails(props) {
         console.log(id)
         props.scenario.messages.splice(id, 1);
         console.log(props.scenario)
+        setData(props.scenario.messages)
         call(props.scenario)
     };
 
@@ -46,14 +49,10 @@ function ScenarioDetails(props) {
             ...rowModesModel,
             [id]: {mode: GridRowModes.View, ignoreModifications: true},
         });
-
-        // const editedRow = scenario.find((row) => row.scenarioId === id);
-        // if (editedRow.isNew) {
-        //     setScenarios(scenario.filter((row) => row.scenarioId !== id));
-        // }
     };
 
     const call = async (scenario) => {
+        props.getScenarios()
         const options = {
             method: 'PUT',
             headers: {
@@ -73,22 +72,33 @@ function ScenarioDetails(props) {
 
     const processRowUpdate = (newRow) => {
         const updatedRow = {...newRow, isNew: false};
-        console.log(updatedRow);
-        //call(updatedRow);
-        props.scenario.messages[updatedRow.key] = updatedRow
+        updatedRow.milliseconds_offset = Number(updatedRow.milliseconds_offset.replace(":" , "")) * 1000
+        props.scenario.messages[updatedRow.key] = updatedRow;
+        console.log(props.scenario)
         call(props.scenario)
         return updatedRow;
     };
 
     function changeOffset(value) {
-        if (value >= 60) {
-            if (String(value % 60).length == 1) {
-                return Math.floor(value / 60) + ":0" + value % 60
-            } else return Math.floor(value / 60) + ":" + value % 60
-        } else if (String(value).length == 1) {
-            return "0:0" + value
-        } else {
-            return "0:" + value
+        for(let id of data){
+            const isInEditMode = rowModesModel[id.key]?.mode === GridRowModes.Edit;
+            if(isInEditMode){
+                return value/1000
+            }
+        }
+        if (value/1000 >= 60) {
+            if (String(value/1000 % 60).length == 1) {
+                return Math.floor(value/1000 / 60) + ":0" + value/1000 % 60
+            } else return Math.floor(value/1000 / 60) + ":" + (value/1000) % 60
+        } else if (String(value/1000).length == 1) {
+            return "0:0" + value/1000
+        } else if(value/1000 < 1){
+            return "0:00" + value/100
+        } else if(value/100 < 1){
+            return "0:000" + value/10
+        }
+        else {
+            return "0:" + value/1000
         }
     }
 
@@ -98,7 +108,7 @@ function ScenarioDetails(props) {
         // { field: "CreationDate", headerName: "Creation Date", width: 200 , editable: true , type:'number'},//TODO CHENA waiting for
         {
             field: "milliseconds_offset",
-            headerName: "Offset",
+            headerName: "Seconds",
             width: 100,
             editable: true,
             type: 'string',
@@ -163,9 +173,9 @@ function ScenarioDetails(props) {
 
     useEffect(() => {
         let array = []
-        let sorted = props.scenario.messages.sort((a, b) => a.milliseconds_offset - b.milliseconds_offset)
+        let sorted = props.scenario.messages.sort((a, b) => a.milliseconds_offset - b.milliseconds_offset);
         for (let i = 0; i < sorted.length; i++) {
-            let message = sorted[i]
+            let message = sorted[i];
             array.push({
                 nickname: message.nickname,
                 text: message.text,
@@ -201,7 +211,7 @@ function ScenarioDetails(props) {
                         />
                     </div>
                 </div>
-                {add ? <AddMessage scenario={props.scenario} setData={setData}/> : <></>}
+                {add ? <AddMessage scenario={props.scenario} setData={setData} setAdd={setAdd} data={data}/> : <></>}
             </div>
         </div>
     );

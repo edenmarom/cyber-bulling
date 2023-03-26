@@ -18,35 +18,35 @@ export default function SignIn() {
 
 
     const signIn = async () => {
-        console.log(currentUser);
-        if(currentUser.length !== 0 && (currentUser.length > 15 || currentUser.length < 6) && (/^[a-zA-Z0-9]*$/.test(currentUser) || /^[a-zA-Z]*$/.test(currentUser))){
+        if(currentUser.length !== 0 && (currentUser.length > 15 || currentUser.length < 6)){
             document.getElementById("error").style.display = "block";
             return;
-        } else if(currentUser.length <= 15 && currentUser.length >= 6 ){
+        }
+        else if(currentUser.length <= 15 && currentUser.length >= 6 && currentUser.match(/[a-zA-Zא-ת]/g) ){
             document.getElementById("error").style.display = "none";
         }
         else {
-            document.getElementById("error").style.display = "none";
-
+            document.getElementById("error").style.display = "block";
+            return;
         }
-    console.log(/^[a-zA-Z]*$/.test(currentUser))
-    const options = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({nickname: currentUser})
-    }
-    try {
-      let result = await fetch(serverAddr + "/users", options);
-      await result.json().then((res) => {
-         dispatch(updateUserID(res.data.user._id));
-         dispatch(initScenario(res.data.scenario));
-         window.location.href = "/chatpreview"
-      });
-    } catch (error){
-        console.log(error);
-    }
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({nickname: currentUser})
+        }
+        try {
+            let result = await fetch(serverAddr + "/users", options);
+            await result.json().then((res) => {
+                console.log(res)
+                dispatch(updateUserID(res.data.user._id));
+                dispatch(initScenario(res.data.scenario));
+
+            });
+        } catch (error){
+            console.log(error);
+        }
     }
     return (
         <div className="login-background">
@@ -67,7 +67,7 @@ export default function SignIn() {
                                onKeyPress={(e)=>{
                                    if(e.key == "Enter"){
                                        e.preventDefault();
-                                       signIn();
+                                       document.getElementById("buttonContinue").click();
                                    }
                                }}
                                maxLength="15" minLength="6"
@@ -82,13 +82,14 @@ export default function SignIn() {
                     </span>
                     </div>
                     <div className="container-login100-form-btn p-t-25">
-
-                            <div style={{textAlign:"center" , color:"red" , display:"none"}} id="error">
-                                <p>הכינוי לא עומד בתנאים - חייב להיות בין 6-15 תווים</p>
-                            </div>
-
-                                <button className="login100-form-btn" onClick={()=>signIn()} style={{marginBottom: "20px"}}>המשך</button>
-
+                        <div style={{textAlign:"center" , color:"red" , display:"none"}} id="error">
+                            <p> הכינוי לא עומד בתנאים - חייב להיות בין 6-15 תווים וגם להכיל לפחות אות אחת</p>
+                        </div>
+                        {currentUser.length <= 15 && currentUser.length >= 6 && currentUser.match(/[a-zA-Zא-ת]/g)?
+                            <Link to="chatpreview">
+                                <button className="login100-form-btn" id="buttonContinue" onClick={()=>signIn()} style={{marginBottom: "20px"}}>המשך</button>
+                            </Link> : <button className="login100-form-btn" onClick={()=>signIn()} style={{marginBottom: "20px"}}>המשך</button>
+                        }
                     </div>
                 </div>
             </div>

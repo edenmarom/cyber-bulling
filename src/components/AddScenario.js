@@ -15,7 +15,7 @@ export default function AddScenario(props) {
         tag: "",
         severity: "",
         commentType: "",
-        numberOfUsers: 0,
+        numberOfUsers: 2,
         messages: []
     }
 
@@ -30,7 +30,7 @@ export default function AddScenario(props) {
 
     const save = async () => {
         scenario.numberOfUsers = Number(scenario.numberOfUsers)
-        message.milliseconds_offset = Number(message.milliseconds_offset)
+        message.milliseconds_offset = Number(message.milliseconds_offset) *1000
         for (let key in scenario) {
             if (key !== "messages") {
                 if (scenario[key] === "") {
@@ -140,6 +140,7 @@ export default function AddScenario(props) {
                                 {/* <label htmlFor='numberOfUsers'>:number of users</label> */}
                                 <TextField id="outlined-basic" label="numberOfUsers" variant="outlined"
                                            type="number"
+                                           min="1"
                                            value={scenario.numberOfUsers}
                                            onChange={(event) => {
                                                setScenario(previousState => {
@@ -163,7 +164,7 @@ export default function AddScenario(props) {
                             </div>
                             <div className='divLabel'>
                                 {/* <label htmlFor='milliseconds_offset'>:milliseconds offset</label> */}
-                                <TextField id="outlined-basic" label="milliseconds_offset" variant="outlined"
+                                <TextField id="outlined-basic" label="seconds" variant="outlined"
                                            type="number"
                                            value={message.milliseconds_offset}
                                            onChange={(event) => {

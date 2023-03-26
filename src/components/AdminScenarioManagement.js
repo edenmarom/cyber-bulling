@@ -7,6 +7,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Close';
 import AdminSideBar from './AdminSideBar';
 import "../css/AdminScenarioManagement.css"
+import {Link} from "react-router-dom";
 import "./ScenarioDetails"
 import {
     GridRowModes,
@@ -35,6 +36,8 @@ export default function AdminScenarioManagement() {
         console.log(scenario)
     }, []);
 
+
+
     const [rowModesModel, setRowModesModel] = useState({});
 
     const handleRowEditStart = (params, event) => {
@@ -46,6 +49,7 @@ export default function AdminScenarioManagement() {
     };
     const handleEditClick = (id) => () => {
         setRowModesModel({...rowModesModel, [id]: {mode: GridRowModes.Edit}});
+        console.log(id , rowModesModel)
     };
 
     const handleSaveClick = (id) => () => {
@@ -76,9 +80,9 @@ export default function AdminScenarioManagement() {
             [id]: {mode: GridRowModes.View, ignoreModifications: true},
         });
 
-        const editedRow = scenario.find((row) => row.scenarioId === id);
+        const editedRow = scenario.find((row) => row._id === id);
         if (editedRow.isNew) {
-            setScenarios(scenario.filter((row) => row.scenarioId !== id));
+            setScenarios(scenario.filter((row) => row._id !== id));
         }
     };
 
@@ -102,7 +106,22 @@ export default function AdminScenarioManagement() {
 
     const processRowUpdate = (newRow) => {
         const updatedRow = {...newRow, isNew: false};
-        console.log(updatedRow);
+        if(updatedRow.commentType !== "against" && updatedRow.commentType !== "noComment" && updatedRow.commentType !== "pro"){
+            alert("commentType need to be against or noComment or pro");
+            setRowModesModel({
+                ...rowModesModel,
+                [updatedRow._id]: {mode: GridRowModes.View, ignoreModifications: true},
+            });
+            return;
+        }
+        if(updatedRow.severity !== "bad" && updatedRow.severity !== "good"){
+            alert("severity need to be bad or good");
+            setRowModesModel({
+                ...rowModesModel,
+                [updatedRow._id]: {mode: GridRowModes.View, ignoreModifications: true},
+            });
+            return;
+        }
         scenario.forEach((scenario) => {
             if (scenario._id === newRow._id) {
                 call(updatedRow);
@@ -117,7 +136,7 @@ export default function AdminScenarioManagement() {
         {field: "numberOfUsers", headerName: "Num Of Users", width: 120, editable: true, type: 'number'},
         {field: "commentType", headerName: "commentType", width: 150, editable: true, type: 'text'},
         // { field: "CreationDate", headerName: "Creation Date", width: 120 , editable: true , type:'number'},//TODO CHENA waiting for Peleg
-        {field: "severity", headerName: "Severity", width: 130, editable: true, type: 'string'},
+        {field: "severity", headerName: "Severity", width: 130, editable: true, type: 'string' } ,
         {
             field: 'actions',
             type: 'actions',
@@ -126,7 +145,6 @@ export default function AdminScenarioManagement() {
             cellClassName: 'actions',
             getActions: ({id}) => {
                 const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
-
                 if (isInEditMode) {
                     return [
                         <div style={{textAlign: "center"}}>
@@ -194,6 +212,9 @@ export default function AdminScenarioManagement() {
 
     return (
         <div className="background">
+            <Link to="/adminlogin">
+                <button className="button-81">Logout</button>
+            </Link>
             <h2 id="scenarioTitle">Scenario Management</h2>
             <div className='element'>
                 <div className="tableScenario">
@@ -225,8 +246,8 @@ export default function AdminScenarioManagement() {
                 </div>
             </div>
             {selectedSenario ?
-                <ScenarioDetails scenario={selectedSenario} setSelectedScenario={setSelectedScenario}/> : <></>}
-            {add ? <AddScenario setAdd={setAdd}/> : <></>}
+                <ScenarioDetails scenario={selectedSenario} setSelectedScenario={setSelectedScenario} getScenarios={getScenarios}/> : <></>}
+            {add ? <AddScenario setAdd={setAdd} setScenarios={setScenarios} scenario={scenario}/> : <></>}
             <AdminSideBar/>
         </div>
     );

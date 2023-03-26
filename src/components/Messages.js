@@ -50,14 +50,14 @@ function Messages() {
     }
 
     function changeOffset(value) {
-        if (value >= 60) {
-            if (String(value % 60).length == 1) {
-                return Math.floor(value / 60) + ":0" + value % 60
-            } else return Math.floor(value / 60) + ":" + value % 60
-        } else if (String(value).length == 1) {
-            return "0:0" + value
+        if (value/1000 >= 60) {
+            if (String(value/1000 % 60).length == 1) {
+                return Math.floor(value/1000 / 60) + ":0" + value/1000 % 60
+            } else return Math.floor(value/1000 / 60) + ":" + (value/1000) % 60
+        } else if (String(value/1000).length == 1) {
+            return "0:0" + value/1000
         } else {
-            return "0:" + value
+            return "0:" + value/1000
         }
     }
 

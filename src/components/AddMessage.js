@@ -24,6 +24,7 @@ export default function AddMessage(props){
                 }
             }
         }
+        message.milliseconds_offset = message.milliseconds_offset * 1000
         props.scenario.messages.push(message)
         console.log(props.scenario)
         // const options ={
@@ -33,14 +34,16 @@ export default function AddMessage(props){
         //     },
         //     body: JSON.stringify(props.scenario)
         // }
+
+        props.setData([...props.data , message])
+        props.setAdd(false)
         try{
-                        let result = await http.put(
-                          `/scenarios/${props.scenario._id}`,
-                          JSON.stringify(props.scenario)
-                        );
+            let result = await http.put(
+                `/scenarios/${props.scenario._id}`,
+                JSON.stringify(props.scenario)
+            );
             await result.json().then((res) => {
                 console.log(res)
-                props.setData(props.scenario.messages)
             })
         }
         catch(err) {
@@ -66,7 +69,7 @@ export default function AddMessage(props){
                         </div>
                         <div className='divLabel'>
                             {/* <label htmlFor='milliseconds_offset'>:milliseconds_offset</label> */}
-                            <TextField id="outlined-basic" label="milliseconds_offset" variant="outlined"
+                            <TextField id="outlined-basic" label="seconds" variant="outlined"
                                        type="number"
                                        value={message.milliseconds_offset}
                                        onChange={(event)=>{setMessage(previousState => {

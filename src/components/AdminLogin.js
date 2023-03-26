@@ -46,18 +46,25 @@ export default function AdminLogin() {
                     <span className="login100-form-subtitle m-b-16"> Enter your password below</span>
                     <div className="wrap-input100 validate-input m-b-16">
                         <input className="input100" type="password" placeholder="Password"
-                               onChange={(e) => setPassword(e.target.value)}/>
+                               onChange={(e) => setPassword(e.target.value)}
+                               onKeyPress={(e)=>{
+                                   if(e.key == "Enter"){
+                                       e.preventDefault();
+                                       document.getElementById("buttonContinueAdmin").click();
+                                   }
+                               }}
+                        />
                         <span className="focus-input100"></span>
                         <span className="symbol-input100">
                         <span className="glyphicon glyphicon-user"></span>
                     </span>
                     </div>
                     <div className="container-login100-form-btn p-t-25">
-                        <Link to="scenariomanagement">{/*TODO CHENA change to admin page*/}
-                            <button className="login100-form-btn" onClick={adminLogin}
+                        {/*<Link to="scenariomanagement">*/}
+                            <button id="buttonContinueAdmin" className="login100-form-btn" onClick={adminLogin}
                                     style={{marginBottom: "20px"}}> Login
                             </button>
-                        </Link>
+                        {/*</Link>*/}
                     </div>
                 </div>
             </div>
