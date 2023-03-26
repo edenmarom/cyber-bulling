@@ -25,7 +25,7 @@ export default function ChatPreview() {
               {" "}
                         {currentUser} :כינוי
             </span>
-                    <span className="login100-form-subtitle m-b-16" style={{fontWeight:"1000"}}>
+                    <span className="login100-form-subtitle m-b-16" style={{fontWeight:"bold"}}>
               {" "}
                         מספר משתתפים: {currentScenario?.scenario.numberOfUsers}
             </span>

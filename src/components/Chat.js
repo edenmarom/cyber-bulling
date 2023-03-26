@@ -12,7 +12,7 @@ function Chat() {
   const [firstMessageTimestamp] = useState(() => performance.now());
 
   const chatName = "הקבוצה הכי טובה בעולם";
-  const ScenarioEndText = ".הסימולצייה הסתיימה. אנא המשיכו בשאלון";
+  const ScenarioEndText = "חדר הצ'אט הסתיים. מיד תועבר/י להמשך הפעילות";
   const delayTimeToSendToServerUserMessages = 5000;
   const defaultUserDisplayColor = "black";
   const userColors = new Map();
@@ -80,9 +80,13 @@ function Chat() {
   };
 
   const sendUserMessagesToServer = () => {
-    const scenarioEndTime =
-      +messages[messages.length - 1].milliseconds_offset +
-      +delayTimeToSendToServerUserMessages;
+    let scenarioEndTime = 0;
+
+    if(messages && messages.length > 0){
+      scenarioEndTime =
+        +messages[messages.length - 1].milliseconds_offset +
+        +delayTimeToSendToServerUserMessages;
+    }
     setTimeout(async () => {
       const convertedMessages = formatUserMessages(
         displayedMessagesRef,

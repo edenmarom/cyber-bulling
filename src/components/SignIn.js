@@ -1,21 +1,14 @@
-import {React, useState, createRef} from 'react';
+import {React} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-// import {
-//     textNumberValidate,
-//     emailValidate,
-// } from "react-validations-components";
 import '../css/SignIn.moudle.css';
 import {Link} from "react-router-dom";
 import {initUser, updateUserID} from "../Slices/UserSlice";
 import {initScenario} from "../Slices/ScenarioSlice";
 import { serverAddr } from '../utils/http-communication';
 
-
 export default function SignIn() {
     const dispatch = useDispatch();
-    const currentScenario = useSelector((state) => state.scenario.scenario);
     const currentUser = useSelector((state) => state.user.nickname);
-
 
     const signIn = async () => {
         if(currentUser.length !== 0 && (currentUser.length > 15 || currentUser.length < 6)){

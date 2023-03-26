@@ -9,10 +9,10 @@
 }
 
 .sidebarChat_info > h2{
-    font-size: 16px;
+    font-size: 19px;
     margin: 0px;
     padding: 10px;
-    font-weight: 500;
+    font-weight: bold;
 }
 
 .sidebarChat_info > p{
