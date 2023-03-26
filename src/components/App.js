@@ -12,24 +12,29 @@ import Messages from "./Messages";
 
 function App() {
     return (
-        <div>
-            <BrowserRouter>
-                <Routes>
-                    <Route path="/">
-                        <Route index element={<SignIn/>}/>
-                        <Route path="adminlogin" element={<AdminLogin/>}/>
-                        <Route path="chatpreview" element={<ChatPreview/>}/>
-                        <Route path="chat" element={<Chat/>}/>
-                        <Route path="adminpage" element={<AdminPage/>}/>
-                        <Route path="scenariomanagement" element={<AdminScenarioManagement/>}/>
-                        <Route path="scenarioReactions">
-                            <Route index element={<ScenarioReactions/>}/>
-                            <Route path=":scenarioId" element={<Messages/>}/>
-                        </Route>
-                    </Route>
-                </Routes>
-            </BrowserRouter>
-        </div>
+      <div>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/">
+              <Route path="chat" element={<Chat />} />
+              <Route path="adminpage" element={<AdminPage />} />
+              <Route
+                path="scenariomanagement"
+                element={<AdminScenarioManagement />}
+              />
+              <Route path="scenarioReactions">
+                <Route index element={<ScenarioReactions />} />
+                <Route path=":scenarioId" element={<Messages />} />
+              </Route>
+            </Route>
+            <Route path="/:scenarioId">
+              <Route index element={<SignIn />} />
+              <Route path="adminlogin" element={<AdminLogin />} />
+              <Route path="chatpreview" element={<ChatPreview />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </div>
     );
 }
 

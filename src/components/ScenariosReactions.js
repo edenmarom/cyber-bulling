@@ -1,14 +1,9 @@
 import {React, useEffect, useState} from 'react';
-import {NavLink, useParams} from 'react-router-dom';
+import { NavLink, useNavigate } from "react-router-dom";
 import {DataGrid} from "@mui/x-data-grid";
 import AdminSideBar from './AdminSideBar';
 import "../css/AdminScenarioManagement.css";
-import {Link} from "react-router-dom";
 import "./ScenarioDetails"
-import {
-    GridRowModes,
-    GridActionsCellItem,
-} from '@mui/x-data-grid-pro';
 import ScenarioDetails from "./ScenarioDetails";
 import AddScenario from './AddScenario';
 import Box from '@mui/material/Box';
@@ -17,9 +12,10 @@ import {serverAddr} from "../utils/http-communication";
 
 export default function ScenarioReactions() {
     const [scenario, setScenarios] = useState([]);
-    const [participants, setParticipants] = useState([]);
     const [selectedSenario, setSelectedScenario] = useState(null)
     const [add, setAdd] = useState(false);
+    const navigate = useNavigate();
+
 
     const getScenarios = () => {
         fetch(serverAddr + "/scenario-reactions")
@@ -53,40 +49,50 @@ export default function ScenarioReactions() {
         {field: "severity", headerName: "Severity", width: 130, editable: true, type: 'string'}
     ];
 
+    const logout = () => {
+    navigate(-2);
+    };
+
     return (
-        <div className="background">
-            <Link to="/adminlogin">
-                <button className="button-81">Logout</button>
-            </Link>
-            <h2 id="scenarioTitle">Scenario Reactions</h2>
-            <div className='element' style={{width: "750px"}}>
-                <div className="tableScenario">
-                    <div className='titleDiv'>
-                        <p></p>
-                        <h2 id="scenarioMiniTitle">All scenarios</h2>
-                    </div>
-                    <Box sx={{height: '90%', width: '100%'}}>
-                        <DataGrid
-                            editMode="row"
-                            rows={scenario}
-                            getRowId={(row) => row._id}
-                            columns={columns}
-                            experimentalFeatures={{newEditingApi: true}}
-                            getRowHeight={() => 'auto'}
-                            getCellClassName={(params) => {
-                                if (params.field !== 'severity') {
-                                    return '';
-                                }
-                                return params.value == "bad" ? 'bad' : 'good';
-                            }}
-                        />
-                    </Box>
-                </div>
+      <div className="background">
+        <button className="button-81" onClick={logout}>
+          Logout
+        </button>
+        <h2 id="scenarioTitle">Scenario Reactions</h2>
+        <div className="element" style={{ width: "750px" }}>
+          <div className="tableScenario">
+            <div className="titleDiv">
+              <p></p>
+              <h2 id="scenarioMiniTitle">All scenarios</h2>
             </div>
-            {selectedSenario ?
-                <ScenarioDetails scenario={selectedSenario} setSelectedScenario={setSelectedScenario}/> : <></>}
-            {add ? <AddScenario/> : <></>}
-            <AdminSideBar/>
+            <Box sx={{ height: "90%", width: "100%" }}>
+              <DataGrid
+                editMode="row"
+                rows={scenario}
+                getRowId={(row) => row._id}
+                columns={columns}
+                experimentalFeatures={{ newEditingApi: true }}
+                getRowHeight={() => "auto"}
+                getCellClassName={(params) => {
+                  if (params.field !== "severity") {
+                    return "";
+                  }
+                  return params.value == "bad" ? "bad" : "good";
+                }}
+              />
+            </Box>
+          </div>
         </div>
+        {selectedSenario ? (
+          <ScenarioDetails
+            scenario={selectedSenario}
+            setSelectedScenario={setSelectedScenario}
+          />
+        ) : (
+          <></>
+        )}
+        {add ? <AddScenario /> : <></>}
+        <AdminSideBar />
+      </div>
     );
 }

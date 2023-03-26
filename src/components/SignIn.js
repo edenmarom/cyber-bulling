@@ -5,8 +5,10 @@ import {Link} from "react-router-dom";
 import {initUser, updateUserID} from "../Slices/UserSlice";
 import {initScenario} from "../Slices/ScenarioSlice";
 import { serverAddr } from '../utils/http-communication';
+import { useParams } from "react-router-dom";
 
 export default function SignIn() {
+    const params = useParams();
     const dispatch = useDispatch();
     const currentUser = useSelector((state) => state.user.nickname);
 
@@ -23,19 +25,18 @@ export default function SignIn() {
             return;
         }
         const options = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({nickname: currentUser})
-        }
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({nickname: currentUser,scenarioId: params.scenarioId}),
+        };
         try {
             let result = await fetch(serverAddr + "/users", options);
             await result.json().then((res) => {
                 console.log(res)
                 dispatch(updateUserID(res.data.user._id));
                 dispatch(initScenario(res.data.scenario));
-
             });
         } catch (error){
             console.log(error);
