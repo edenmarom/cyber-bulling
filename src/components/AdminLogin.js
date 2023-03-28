@@ -59,7 +59,7 @@ export default function AdminLogin() {
                 placeholder="Password"
                 onChange={(e) => setPassword(e.target.value)}
                 onKeyPress={(e) => {
-                  if (e.key == "Enter") {
+                  if (e.key === "Enter") {
                     e.preventDefault();
                     document.getElementById("buttonContinueAdmin").click();
                   }

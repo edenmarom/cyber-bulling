@@ -65,7 +65,7 @@ export default function AdminScenarioManagement() {
         try {
             let result = await fetch(serverAddr + `/scenarios/${id}`, options);
             await result.json().then(() => {
-                getScenarios();//TODO CHENA - check its refresh
+                getScenarios();
             })
         } catch {
             alert("Can't delete scenario")

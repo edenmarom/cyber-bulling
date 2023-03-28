@@ -137,7 +137,6 @@ export default function AddScenario(props) {
 
                             </div>
                             <div className='divLabel'>
-                                {/* <label htmlFor='numberOfUsers'>:number of users</label> */}
                                 <TextField id="outlined-basic" label="numberOfUsers" variant="outlined"
                                            type="number"
                                            min="1"
@@ -150,9 +149,7 @@ export default function AddScenario(props) {
                             </div>
                             <h2 style={{ fontSize: "24px", padding: "5px" }}>first message</h2>
                             <h2 style={{ fontSize: "12px", padding: "5px" }}>the rest messages you can add after you add the scenario</h2>
-                            {/* <h3 style={{textAlign:"center" , color:"blue"}}>message</h3> */}
                             <div className='divLabel'>
-                                {/* <label htmlFor='text'>:text</label> */}
                                 <TextField id="outlined-basic" label="text" variant="outlined"
                                            value={message.text}
                                            onChange={(event) => {
@@ -163,7 +160,6 @@ export default function AddScenario(props) {
                                 />
                             </div>
                             <div className='divLabel'>
-                                {/* <label htmlFor='milliseconds_offset'>:milliseconds offset</label> */}
                                 <TextField id="outlined-basic" label="seconds" variant="outlined"
                                            type="number"
                                            value={message.milliseconds_offset}
@@ -175,7 +171,6 @@ export default function AddScenario(props) {
 
                             </div>
                             <div className='divLabel'>
-                                {/* <label htmlFor='nickname'>:nickname</label> */}
                                 <TextField id="outlined-basic" label="nickname" variant="outlined"
                                            value={message.nickname}
                                            onChange={(event) => {

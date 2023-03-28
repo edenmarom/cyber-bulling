@@ -45,7 +45,6 @@ export default function ScenarioReactions() {
         },
         {field: "numberOfUsers", headerName: "Num Of Users", width: 120, editable: true, type: 'number'},
         {field: "commentType", headerName: "commentType", width: 150, editable: true, type: 'text'},
-        // { field: "CreationDate", headerName: "Creation Date", width: 120 , editable: true , type:'number'},//TODO CHENA waiting for Peleg
         {field: "severity", headerName: "Severity", width: 130, editable: true, type: 'string'}
     ];
 
@@ -77,7 +76,7 @@ export default function ScenarioReactions() {
                   if (params.field !== "severity") {
                     return "";
                   }
-                  return params.value == "bad" ? "bad" : "good";
+                  return params.value === "bad" ? "bad" : "good";
                 }}
               />
             </Box>

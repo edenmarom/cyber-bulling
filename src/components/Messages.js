@@ -24,15 +24,15 @@ function Messages() {
 
     function changeOffset(value) {
         if(value/1000 >= 3600){
-            if (String(Math.floor(value/1000 % 3600)).length == 1) {
+            if (String(Math.floor(value/1000 % 3600)).length === 1) {
                 return Math.floor(value/1000 / 3600) + ":0" + Math.floor(value/1000 % 3600 /60) + ":" + Math.floor(value/1000 % 60)
             } else return Math.floor(value/1000 / 3600) + ":" + Math.floor(value/1000 % 3600 /60) + ":" + Math.floor((value/1000) % 60)
         }
         if (value/1000 >= 60) {
-            if (String(Math.floor(value/1000 % 60)).length == 1) {
+            if (String(Math.floor(value/1000 % 60)).length === 1) {
                 return Math.floor(value/1000 / 60) + ":0" + Math.floor(value/1000 % 60)
             } else return Math.floor(value/1000 / 60) + ":" + Math.floor((value/1000) % 60)
-        } else if (String(value/1000).length == 1) {
+        } else if (String(value/1000).length === 1) {
             return "0:0" + value/1000
         } else {
             return "0:" + value/1000
@@ -92,7 +92,7 @@ function Messages() {
                     getRowHeight={() => 'auto'}
                     autoHeight={true}
                     getRowClassName={(params) => {
-                        return params.row.participant == true ? 'participant' : 'noParticipant';
+                        return params.row.participant === true ? 'participant' : 'noParticipant';
                     }}
                 />
             </Box>

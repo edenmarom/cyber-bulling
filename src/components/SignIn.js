@@ -78,7 +78,6 @@ export default function SignIn() {
                 maxLength="15"
                 minLength="6"
                 onChange={(e) => {
-                  //TODO CHENA change to onSubmit
                   dispatch(initUser(e.target.value));
                 }}
               />

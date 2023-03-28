@@ -9,11 +9,9 @@ import "../css/ScenarioDetails.css";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import AddMessage from './AddMessage';
 import { serverAddr } from "../utils/http-communication";
-import http from "../utils/http-communication";
 
 
 function ScenarioDetails(props) {
-    // console.log(props.scenario)
     const [data, setData] = useState([])
     const [add, setAdd] = useState(false);
 
@@ -33,10 +31,6 @@ function ScenarioDetails(props) {
 
     const handleSaveClick = (id) => () => {
         setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
-        // setRowModesModel({
-        //     ...rowModesModel,
-        //     [id]: { mode: GridRowModes.View, ignoreModifications: true },
-        // });
     };
 
     const handleDeleteClick = (id) => async () => {
@@ -92,15 +86,15 @@ function ScenarioDetails(props) {
             }
         }
         if(value/1000 >= 3600){
-            if (String(Math.floor(value/1000 % 3600)).length == 1) {
+            if (String(Math.floor(value/1000 % 3600)).length === 1) {
                 return Math.floor(value/1000 / 3600) + ":0" + Math.floor(value/1000 % 3600 /60) + ":" + Math.floor(value/1000 % 60)
             } else return Math.floor(value/1000 / 3600) + ":" + Math.floor(value/1000 % 3600 /60) + ":" + Math.floor((value/1000) % 60)
         }
         if (value/1000 >= 60) {
-            if (String(Math.floor(value/1000 % 60)).length == 1) {
+            if (String(Math.floor(value/1000 % 60)).length === 1) {
                 return Math.floor(value/1000 / 60) + ":0" + Math.floor(value/1000 % 60)
             } else return Math.floor(value/1000 / 60) + ":" + Math.floor((value/1000) % 60)
-        } else if (String(value/1000).length == 1) {
+        } else if (String(value/1000).length === 1) {
             return "0:0" + value/1000
         } else {
             return "0:" + value/1000
@@ -110,7 +104,6 @@ function ScenarioDetails(props) {
     const columns = [
         { field: "nickname", headerName: "User", width: 200, editable: true, type: 'string' },
         { field: "text", headerName: "Message", width: 200, editable: true, type: 'string' },
-        // { field: "CreationDate", headerName: "Creation Date", width: 200 , editable: true , type:'number'},//TODO CHENA waiting for
         {
             field: "milliseconds_offset",
             headerName: "Seconds",
@@ -159,7 +152,6 @@ function ScenarioDetails(props) {
                             onClick={handleDeleteClick(id)}
                             color="inherit"
                         />
-                        {/* <p style={{marginBotton:"0px"}}>delete</p>  */}
                     </div>,
                     <div style={{ textAlign: "center" }}>
                         <GridActionsCellItem
@@ -169,7 +161,6 @@ function ScenarioDetails(props) {
                             onClick={handleEditClick(id)}
                             color="inherit"
                         />
-                        {/* <p style={{marginBotton:"0px"}}>edit</p>  */}
                     </div>
                 ];
             },
@@ -193,7 +184,7 @@ function ScenarioDetails(props) {
     }, [])
 
     function close(e) {
-        if (e.target.className == "popup") {
+        if (e.target.className === "popup") {
             props.setSelectedScenario(null);
         }
     }
