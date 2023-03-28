@@ -1,14 +1,15 @@
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
-import {React, useEffect, useState} from "react";
-import {DataGrid} from "@mui/x-data-grid";
-import {GridActionsCellItem, GridRowModes} from "@mui/x-data-grid-pro";
+import { React, useEffect, useState } from "react";
+import { DataGrid } from "@mui/x-data-grid";
+import { GridActionsCellItem, GridRowModes } from "@mui/x-data-grid-pro";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
 import "../css/ScenarioDetails.css";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import AddMessage from './AddMessage';
-import {serverAddr} from "../utils/http-communication";
+import { serverAddr } from "../utils/http-communication";
+import http from "../utils/http-communication";
 
 
 function ScenarioDetails(props) {
@@ -27,13 +28,15 @@ function ScenarioDetails(props) {
     };
 
     const handleEditClick = (id) => () => {
-        console.log(id)
-        console.log(props.scenario.messages[0])
-        setRowModesModel({...rowModesModel, [id]: {mode: GridRowModes.Edit}});
+        setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
     };
 
     const handleSaveClick = (id) => () => {
-        setRowModesModel({...rowModesModel, [id]: {mode: GridRowModes.View}});
+        setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
+        // setRowModesModel({
+        //     ...rowModesModel,
+        //     [id]: { mode: GridRowModes.View, ignoreModifications: true },
+        // });
     };
 
     const handleDeleteClick = (id) => async () => {
@@ -47,7 +50,7 @@ function ScenarioDetails(props) {
     const handleCancelClick = (id) => () => {
         setRowModesModel({
             ...rowModesModel,
-            [id]: {mode: GridRowModes.View, ignoreModifications: true},
+            [id]: { mode: GridRowModes.View, ignoreModifications: true },
         });
     };
 
@@ -68,11 +71,13 @@ function ScenarioDetails(props) {
         } catch {
             alert("Can't update scenario")
         }
+
     }
 
     const processRowUpdate = (newRow) => {
-        const updatedRow = {...newRow, isNew: false};
-        updatedRow.milliseconds_offset = Number(updatedRow.milliseconds_offset.replace(":" , "")) * 1000
+        const updatedRow = { ...newRow, isNew: false };
+        console.log(updatedRow)
+        updatedRow.milliseconds_offset = Number(updatedRow.milliseconds_offset) * 1000
         props.scenario.messages[updatedRow.key] = updatedRow;
         console.log(props.scenario)
         call(props.scenario)
@@ -80,31 +85,31 @@ function ScenarioDetails(props) {
     };
 
     function changeOffset(value) {
-        for(let id of data){
+        for (let id of data) {
             const isInEditMode = rowModesModel[id.key]?.mode === GridRowModes.Edit;
-            if(isInEditMode){
-                return value/1000
+            if (isInEditMode) {
+                return value / 1000
             }
         }
+        if(value/1000 >= 3600){
+            if (String(Math.floor(value/1000 % 3600)).length == 1) {
+                return Math.floor(value/1000 / 3600) + ":0" + Math.floor(value/1000 % 3600 /60) + ":" + Math.floor(value/1000 % 60)
+            } else return Math.floor(value/1000 / 3600) + ":" + Math.floor(value/1000 % 3600 /60) + ":" + Math.floor((value/1000) % 60)
+        }
         if (value/1000 >= 60) {
-            if (String(value/1000 % 60).length == 1) {
-                return Math.floor(value/1000 / 60) + ":0" + value/1000 % 60
-            } else return Math.floor(value/1000 / 60) + ":" + (value/1000) % 60
+            if (String(Math.floor(value/1000 % 60)).length == 1) {
+                return Math.floor(value/1000 / 60) + ":0" + Math.floor(value/1000 % 60)
+            } else return Math.floor(value/1000 / 60) + ":" + Math.floor((value/1000) % 60)
         } else if (String(value/1000).length == 1) {
             return "0:0" + value/1000
-        } else if(value/1000 < 1){
-            return "0:00" + value/100
-        } else if(value/100 < 1){
-            return "0:000" + value/10
-        }
-        else {
+        } else {
             return "0:" + value/1000
         }
     }
 
     const columns = [
-        {field: "nickname", headerName: "User", width: 200, editable: true, type: 'string'},
-        {field: "text", headerName: "Message", width: 200, editable: true, type: 'string'},
+        { field: "nickname", headerName: "User", width: 200, editable: true, type: 'string' },
+        { field: "text", headerName: "Message", width: 200, editable: true, type: 'string' },
         // { field: "CreationDate", headerName: "Creation Date", width: 200 , editable: true , type:'number'},//TODO CHENA waiting for
         {
             field: "milliseconds_offset",
@@ -112,53 +117,53 @@ function ScenarioDetails(props) {
             width: 100,
             editable: true,
             type: 'string',
-            valueGetter: ({value}) => changeOffset(value)
+            valueGetter: ({ value }) => changeOffset(value)
         },
         {
             field: 'actions',
             type: 'actions',
-            headerName: <AddCircleOutlineIcon onClick={() => setAdd(true)}/>,
+            headerName: <AddCircleOutlineIcon onClick={() => setAdd(true)} />,
             width: 200,
             cellClassName: 'actions',
-            getActions: ({id}) => {
+            getActions: ({ id }) => {
                 const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
 
                 if (isInEditMode) {
                     return [
-                        <div style={{textAlign: "center"}}>
+                        <div style={{ textAlign: "center" }}>
                             <GridActionsCellItem
-                                icon={<SaveIcon/>}
+                                icon={<SaveIcon />}
                                 label="Save"
                                 onClick={handleSaveClick(id)}
                             />
-                            <p style={{marginBotton: "0px"}}>save</p>
+                            <p style={{ marginBotton: "0px" }}>save</p>
                         </div>,
-                        <div style={{textAlign: "center"}}>
+                        <div style={{ textAlign: "center" }}>
                             <GridActionsCellItem
-                                icon={<CancelIcon/>}
+                                icon={<CancelIcon />}
                                 label="Cancel"
                                 className="textPrimary"
                                 onClick={handleCancelClick(id)}
                                 color="inherit"
                             />
-                            <p style={{marginBotton: "0px"}}>cancel</p>
+                            <p style={{ marginBotton: "0px" }}>cancel</p>
                         </div>
                     ];
                 }
 
                 return [
-                    <div style={{textAlign: "center"}}>
+                    <div style={{ textAlign: "center" }}>
                         <GridActionsCellItem
-                            icon={<DeleteIcon/>}
+                            icon={<DeleteIcon />}
                             label="Delete"
                             onClick={handleDeleteClick(id)}
                             color="inherit"
                         />
                         {/* <p style={{marginBotton:"0px"}}>delete</p>  */}
                     </div>,
-                    <div style={{textAlign: "center"}}>
+                    <div style={{ textAlign: "center" }}>
                         <GridActionsCellItem
-                            icon={<EditIcon/>}
+                            icon={<EditIcon />}
                             label="Edit"
                             className="textPrimary"
                             onClick={handleEditClick(id)}
@@ -207,11 +212,11 @@ function ScenarioDetails(props) {
                             onRowEditStart={handleRowEditStart}
                             onRowEditStop={handleRowEditStop}
                             processRowUpdate={processRowUpdate}
-                            experimentalFeatures={{newEditingApi: true}}
+                            experimentalFeatures={{ newEditingApi: true }}
                         />
                     </div>
                 </div>
-                {add ? <AddMessage scenario={props.scenario} setData={setData} setAdd={setAdd} data={data}/> : <></>}
+                {add ? <AddMessage scenario={props.scenario} setData={setData} setAdd={setAdd} data={data} /> : <></>}
             </div>
         </div>
     );

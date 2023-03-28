@@ -2,6 +2,8 @@ import {React , useState}  from 'react';
 import { TextField } from '@material-ui/core';
 import '../css/AddScenario.css';
 import http from "../utils/http-communication";
+import { serverAddr } from "../utils/http-communication";
+
 
 
 export default function AddMessage(props){
@@ -27,28 +29,22 @@ export default function AddMessage(props){
         message.milliseconds_offset = message.milliseconds_offset * 1000
         props.scenario.messages.push(message)
         console.log(props.scenario)
-        // const options ={
-        //     method: 'PUT',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify(props.scenario)
-        // }
-
         props.setData([...props.data , message])
         props.setAdd(false)
-        try{
-            let result = await http.put(
-                `/scenarios/${props.scenario._id}`,
-                JSON.stringify(props.scenario)
-            );
-            await result.json().then((res) => {
+        const options = {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(props.scenario)
+        }
+        try {
+            let result = await fetch(serverAddr + `/scenarios/${props.scenario._id}`, options);
+            result.json().then((res) => {
                 console.log(res)
             })
-        }
-        catch(err) {
-            console.log(err)
-            console.log("Can't insert to scenarios")
+        } catch {
+            alert("Can't update scenario")
         }
     }
 

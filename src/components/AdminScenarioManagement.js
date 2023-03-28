@@ -1,4 +1,5 @@
 import {React, useEffect, useState} from 'react';
+import {NavLink, useParams} from 'react-router-dom';
 import {DataGrid} from "@mui/x-data-grid";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
@@ -6,7 +7,6 @@ import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Close';
 import AdminSideBar from './AdminSideBar';
 import "../css/AdminScenarioManagement.css"
-import { useNavigate } from "react-router-dom";
 import "./ScenarioDetails"
 import {
     GridRowModes,
@@ -16,6 +16,7 @@ import ScenarioDetails from "./ScenarioDetails";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import AddScenario from './AddScenario';
 import Box from '@mui/material/Box';
+import { useNavigate, Link } from "react-router-dom";
 import {serverAddr} from "../utils/http-communication";
 
 
@@ -47,7 +48,6 @@ export default function AdminScenarioManagement() {
     };
     const handleEditClick = (id) => () => {
         setRowModesModel({...rowModesModel, [id]: {mode: GridRowModes.Edit}});
-        console.log(id , rowModesModel)
     };
 
     const handleSaveClick = (id) => () => {
@@ -131,7 +131,7 @@ export default function AdminScenarioManagement() {
 
     const columns = [
         {field: "_id", headerName: "Scenario id", width: 300,},
-        {field: "numberOfUsers", headerName: "Num Of Users", width: 120, editable: true, type: 'number'},
+        {field: "numberOfUsers", headerName: "Num Of Users", width: 120, editable: true, type: 'number' },
         {field: "commentType", headerName: "commentType", width: 150, editable: true, type: 'text'},
         // { field: "CreationDate", headerName: "Creation Date", width: 120 , editable: true , type:'number'},//TODO CHENA waiting for Peleg
         {field: "severity", headerName: "Severity", width: 130, editable: true, type: 'string' } ,
