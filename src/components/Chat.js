@@ -74,7 +74,7 @@ function Chat() {
      );
      const convertedMessages = userMessages.map((msg) => ({
        text: msg.text,
-       milliseconds_offset: Math.round(msg.milliseconds_offset * 1000),
+       milliseconds_offset: (Math.round(msg.milliseconds_offset/100))*100,
      }));
      return convertedMessages;
   };

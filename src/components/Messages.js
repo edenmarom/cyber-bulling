@@ -32,10 +32,10 @@ function Messages() {
             if (String(Math.floor(value/1000 % 60)).length === 1) {
                 return Math.floor(value/1000 / 60) + ":0" + Math.floor(value/1000 % 60)
             } else return Math.floor(value/1000 / 60) + ":" + Math.floor((value/1000) % 60)
-        } else if (String(value/1000).length === 1) {
-            return "0:0" + value/1000
+        } else if (String(value/1000) < 10) {
+            return "0:0" + Math.floor(value / 1000);
         } else {
-            return "0:" + value/1000
+            return "0:" + Math.floor(value / 1000);
         }
     }
 
