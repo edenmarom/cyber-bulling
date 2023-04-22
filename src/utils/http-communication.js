@@ -1,6 +1,7 @@
 import axios from "axios";
 // export const serverAddr = "https://cyber-bullying-server.onrender.com";
-export const serverAddr = "http://localhost:3000";
+// export const serverAddr = "http://localhost:3000";
+export const serverAddr = "http://project137.cs.colman.ac.il:3000";
 
 export default axios.create({
   baseURL: "https://cyber-bullying-server.onrender.com/",
