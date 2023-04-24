@@ -7,14 +7,16 @@ import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
 import "../css/ScenarioDetails.css";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import AddMessage from './AddMessage';
 import { serverAddr } from "../utils/http-communication";
+import AddSilentUsers from './AddSilentUsers';
 
 
 function ScenarioDetails(props) {
     const [data, setData] = useState([])
     const [add, setAdd] = useState(false);
-
+    const [addSilentUsers, setAddSilentUsers] = useState(false);
     const [rowModesModel, setRowModesModel] = useState({});
 
     const handleRowEditStart = (params, event) => {
@@ -102,69 +104,134 @@ function ScenarioDetails(props) {
     }
 
     const columns = [
-        { field: "nickname", headerName: "User", width: 200, editable: true, type: 'string' },
-        { field: "text", headerName: "Message", width: 200, editable: true, type: 'string' },
-        {
-            field: "milliseconds_offset",
-            headerName: "Seconds",
-            width: 100,
-            editable: true,
-            type: 'string',
-            valueGetter: ({ value }) => changeOffset(value)
+      {
+        field: "nickname",
+        headerName: "User",
+        width: 200,
+        editable: true,
+        type: "string",
+      },
+      {
+        field: "text",
+        headerName: "Message",
+        width: 200,
+        editable: true,
+        type: "string",
+      },
+      {
+        field: "milliseconds_offset",
+        headerName: "Seconds",
+        width: 100,
+        editable: true,
+        type: "string",
+        valueGetter: ({ value }) => changeOffset(value),
+      },
+      {
+        field: "actions_addSilentUsers",
+        type: "actions",
+        headerName: <PersonAddIcon onClick={() => setAddSilentUsers(true)} />,
+        width: 100,
+        cellClassName: "actions",
+        getActions: ({ id }) => {
+          const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
+
+          if (isInEditMode) {
+            return [
+              <div style={{ textAlign: "center" }}>
+                <GridActionsCellItem
+                  icon={<SaveIcon />}
+                  label="Save"
+                  onClick={handleSaveClick(id)}
+                />
+                <p style={{ marginBotton: "0px" }}>save</p>
+              </div>,
+              <div style={{ textAlign: "center" }}>
+                <GridActionsCellItem
+                  icon={<CancelIcon />}
+                  label="Cancel"
+                  className="textPrimary"
+                  onClick={handleCancelClick(id)}
+                  color="inherit"
+                />
+                <p style={{ marginBotton: "0px" }}>cancel</p>
+              </div>,
+            ];
+          }
+
+          return [
+            <div style={{ textAlign: "center" }}>
+              <GridActionsCellItem
+                icon={<DeleteIcon />}
+                label="Delete"
+                onClick={handleDeleteClick(id)}
+                color="inherit"
+              />
+            </div>,
+            <div style={{ textAlign: "center" }}>
+              <GridActionsCellItem
+                icon={<EditIcon />}
+                label="Edit"
+                className="textPrimary"
+                onClick={handleEditClick(id)}
+                color="inherit"
+              />
+            </div>,
+          ];
         },
-        {
-            field: 'actions',
-            type: 'actions',
-            headerName: <AddCircleOutlineIcon onClick={() => setAdd(true)} />,
-            width: 200,
-            cellClassName: 'actions',
-            getActions: ({ id }) => {
-                const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
+      },
+      {
+        field: "actions_addMessage",
+        type: "actions",
+        headerName: <AddCircleOutlineIcon onClick={() => setAdd(true)} />,
+        width: 100,
+        cellClassName: "actions",
+        getActions: ({ id }) => {
+          const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
 
-                if (isInEditMode) {
-                    return [
-                        <div style={{ textAlign: "center" }}>
-                            <GridActionsCellItem
-                                icon={<SaveIcon />}
-                                label="Save"
-                                onClick={handleSaveClick(id)}
-                            />
-                            <p style={{ marginBotton: "0px" }}>save</p>
-                        </div>,
-                        <div style={{ textAlign: "center" }}>
-                            <GridActionsCellItem
-                                icon={<CancelIcon />}
-                                label="Cancel"
-                                className="textPrimary"
-                                onClick={handleCancelClick(id)}
-                                color="inherit"
-                            />
-                            <p style={{ marginBotton: "0px" }}>cancel</p>
-                        </div>
-                    ];
-                }
+          if (isInEditMode) {
+            return [
+              <div style={{ textAlign: "center" }}>
+                <GridActionsCellItem
+                  icon={<SaveIcon />}
+                  label="Save"
+                  onClick={handleSaveClick(id)}
+                />
+                <p style={{ marginBotton: "0px" }}>save</p>
+              </div>,
+              <div style={{ textAlign: "center" }}>
+                <GridActionsCellItem
+                  icon={<CancelIcon />}
+                  label="Cancel"
+                  className="textPrimary"
+                  onClick={handleCancelClick(id)}
+                  color="inherit"
+                />
+                <p style={{ marginBotton: "0px" }}>cancel</p>
+              </div>,
+            ];
+          }
 
-                return [
-                    <div style={{ textAlign: "center" }}>
-                        <GridActionsCellItem
-                            icon={<DeleteIcon />}
-                            label="Delete"
-                            onClick={handleDeleteClick(id)}
-                            color="inherit"
-                        />
-                    </div>,
-                    <div style={{ textAlign: "center" }}>
-                        <GridActionsCellItem
-                            icon={<EditIcon />}
-                            label="Edit"
-                            className="textPrimary"
-                            onClick={handleEditClick(id)}
-                            color="inherit"
-                        />
-                    </div>
-                ];
-            },
-        }
+          return [
+            <div style={{ textAlign: "center" }}>
+              <GridActionsCellItem
+                icon={<DeleteIcon />}
+                label="Delete"
+                onClick={handleDeleteClick(id)}
+                color="inherit"
+              />
+            </div>,
+            <div style={{ textAlign: "center" }}>
+              <GridActionsCellItem
+                icon={<EditIcon />}
+                label="Edit"
+                className="textPrimary"
+                onClick={handleEditClick(id)}
+                color="inherit"
+              />
+            </div>,
+          ];
+        },
+      },
     ];
 
     useEffect(() => {
@@ -208,6 +275,8 @@ function ScenarioDetails(props) {
                     </div>
                 </div>
                 {add ? <AddMessage scenario={props.scenario} setData={setData} setAdd={setAdd} data={data} /> : <></>}
+                {addSilentUsers ? <AddSilentUsers scenario={props.scenario} setData={setData} setAdd={setAdd} data={data} /> : <></>}
+
             </div>
         </div>
     );

@@ -21,6 +21,18 @@
     direction:rtl;
 }
 
+.app3 {
+    margin: 0 auto;
+    width: 400px;
+    height: 400px;
+    border: 1px solid rgb(46, 45, 45);
+    background-color: aliceblue;
+    position: fixed;
+    top: calc(50% - 160px);
+    left: calc(50% - 200px + 120px);
+    direction: rtl;
+}
+
 
 .h2{
     padding-bottom: 5px;

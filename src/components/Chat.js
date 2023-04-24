@@ -11,13 +11,14 @@ function Chat() {
   const [displayedMessages, setDisplayedMessages] = useState([]);
   const [firstMessageTimestamp] = useState(() => performance.now());
 
-  const chatName = "הקבוצה הכי טובה בעולם";
+  const chatName = "יש לך שאלה?";
   const ScenarioEndText = "חדר הצ'אט הסתיים. אנא חזור לשאלון";
   const delayTimeToSendToServerUserMessages = 5000;
   const defaultUserDisplayColor = "black";
   const userColors = new Map();
   const currentUser = useSelector((state) => state.user);
   const messages = useSelector((state) => state.scenario.scenario.messages);
+  const silentUsers = useSelector((state) => state.scenario.scenario.silentUsers);
   const displayedMessagesRef = useRef(displayedMessages);
   displayedMessagesRef.current = displayedMessages;
   const lastMessageRef = useRef(null);
@@ -65,7 +66,7 @@ function Chat() {
       Math.random() * uniquefakeUsersNicknames.length
     );
     uniquefakeUsersNicknames.splice(randomIndex, 0, currentUser.nickname);
-    setParticipants(uniquefakeUsersNicknames);
+    setParticipants(uniquefakeUsersNicknames?.concat(silentUsers));
   };
 
   const formatUserMessages = (displayedMessagesRef, currentUser) => {

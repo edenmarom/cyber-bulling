@@ -5,7 +5,8 @@ const initialState = {
         commentType: "",
         severity:"",
         numberOfUsers: 0,
-        messages: []
+        messages: [],
+        silentUsers:[]
     }
 }
 

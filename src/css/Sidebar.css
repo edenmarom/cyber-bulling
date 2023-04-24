@@ -1,5 +1,6 @@
 .sidebar{
     flex: 0.35;
+    max-width: 380px;
 }
 
 .participantsList{

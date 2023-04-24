@@ -1,10 +1,7 @@
 import {React , useState}  from 'react';
 import { TextField } from '@material-ui/core';
 import '../css/AddScenario.css';
-import http from "../utils/http-communication";
 import { serverAddr } from "../utils/http-communication";
-
-
 
 export default function AddMessage(props){
 
